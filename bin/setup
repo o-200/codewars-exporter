@@ -1,3 +1,5 @@
+system('bundle')
+
 puts 'input your name from codewars nickname'
 nick = gets.chomp.to_s
 
