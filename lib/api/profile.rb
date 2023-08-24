@@ -7,12 +7,6 @@ class Profile
     @json = json_parse
   end
 
-  def json_parse
-    uri = URI(@request)
-    response = Net::HTTP.get(uri)
-    JSON.parse(response)
-  end
-
   def username
     @json['username']
   end
@@ -23,5 +17,13 @@ class Profile
 
   def rank
     @json['ranks']
+  end
+
+  private
+
+  def json_parse
+    uri = URI(@request)
+    response = Net::HTTP.get(uri)
+    JSON.parse(response)
   end
 end
