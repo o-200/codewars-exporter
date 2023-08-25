@@ -16,7 +16,11 @@ class Profile
   end
 
   def rank
-    @json['ranks']
+    @json['ranks']['overall']['name']
+  end
+
+  def languages
+    @json['ranks']['languages'].keys
   end
 
   private
@@ -27,3 +31,4 @@ class Profile
     JSON.parse(response)
   end
 end
+

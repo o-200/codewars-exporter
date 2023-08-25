@@ -1,0 +1,6 @@
+require './lib/api/table.rb'
+
+table = ApiTable.new
+
+system('clear')
+puts table.table
