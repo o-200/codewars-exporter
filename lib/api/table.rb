@@ -9,9 +9,12 @@ class ApiTable
 
   def create_table
     set_style_table
-    
-    arr = [profile.username, profile.languages.join("\n"), profile.rank, profile.honor, profile.leaderboard, profile.total_completed]
-    table << arr
+
+
+    table << [
+              profile.username, profile.languages.join("\n"), profile.rank,
+              profile.honor, profile.leaderboard, profile.total_completed
+             ]
 
     table
   end

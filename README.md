@@ -7,7 +7,7 @@ yo, that's a test readme for me. Idea from random ruby chat and i am challenge m
 api - https://dev.codewars.com/
 
 
-# Usage ?
+# Usage ? (not completed yet)
 
 
 #### 1. setup application. Using that command you should save your nickname (or link later) on your codewars. generated file should using once
