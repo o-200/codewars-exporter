@@ -9,21 +9,21 @@ class ApiTable
     create_table(@profile.rank)
   end
 
-  def table
-    @table
-  end
-
-  def profile
-    @profile
-  end
-
-  private
-
   def create_table(hash)
     table.title = 'Codewars'
     table.style = {:all_separators => true}
     table.headings = ['Username', 'Languages', 'rankname', 'score']
 
     table << [profile.username, profile.languages.join("\n"), profile.rank, profile.honor]
+  end
+
+  def table
+    @table
+  end
+
+  private
+
+  def profile
+    @profile
   end
 end
