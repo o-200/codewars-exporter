@@ -23,6 +23,14 @@ class Profile
     @json['ranks']['languages'].keys
   end
 
+  def leaderboard
+    @json['leaderboardPosition']
+  end
+
+  def total_completed
+    @json['codeChallenges']['totalCompleted']
+  end
+
   private
 
   def json_parse

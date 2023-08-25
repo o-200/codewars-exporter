@@ -11,10 +11,11 @@ class ApiTable
 
   def create_table(hash)
     table.title = 'Codewars'
-    table.style = {:all_separators => true}
-    table.headings = ['Username', 'Languages', 'rankname', 'score']
+    table.style = {:all_separators => true, :alignment => :center}
+    table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
 
-    table << [profile.username, profile.languages.join("\n"), profile.rank, profile.honor]
+    arr = [profile.username, profile.languages.join("\n"), profile.rank, profile.honor, profile.leaderboard, profile.total_completed]
+    table << arr
   end
 
   def table
