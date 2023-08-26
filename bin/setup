@@ -1,6 +1,6 @@
 system('bundle')
 
-puts 'input your nickname from codewars'
+puts 'input your nickname from codewars:'
 nick = gets.chomp.to_s
 
 file = File.new('.codewars-nick', 'w+')

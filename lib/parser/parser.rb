@@ -19,12 +19,15 @@ class Parser
     login
     parse
 
+    puts "#{SOLUTION_FILE} was created! closing program..."
     @browser.close
   end
 
   private
 
   def request_data
+    puts "starting request data..."
+
     unless File.exists?(DATA_FILE)
       puts "Enter your email:"
       email = gets.chomp
@@ -59,15 +62,28 @@ class Parser
     doc = Nokogiri::HTML.parse(browser.html)
     item_list = doc.css('.list-item-solutions')
 
-    item_list.each do |item|
-      solution_name = item.at_css('a').text
-      kyu = item.at_css('.inner-small-hex').text
-      solution = item.at_css('pre').text
+    puts 'parsing complete'
+    puts 'starting to separate files'
 
+    separate_data(item_list)
 
-      place_to_file([solution_name, kyu, solution])
+  end
+
+  def separate_data(list)
+    list.each do |item|
+      hash = {
+        solution_name: item.at_css('a').text,
+        kyu: item.at_css('.inner-small-hex').text,
+        solution: item.at_css('pre').text
+      }
+      place_to_file(hash)
     end
+  end
 
+  def place_to_file(hash)
+    File.write(SOLUTION_FILE, hash[:solution_name] + hash[:kyu] + "\n", mode: 'a')
+
+    File.write(SOLUTION_FILE, hash[:solution] + "\n\n", mode: 'a')
   end
 
   def scroll_to_bottom(browser)
@@ -80,11 +96,5 @@ class Parser
     end
 
     browser
-  end
-
-  def place_to_file(array)
-    File.write(SOLUTION_FILE, array[0..1].join(', ') + "\n", mode: 'a')
-
-    File.write(SOLUTION_FILE, array[2] + "\n\n", mode: 'a')
   end
 end
