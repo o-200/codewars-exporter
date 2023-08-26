@@ -5,4 +5,4 @@ table = ApiTable.new(File.open('.codewars-nick').read)
 system('clear')
 table.create_table
 
-puts table.table
+puts table.table # ???
