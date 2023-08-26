@@ -2,36 +2,24 @@ require_relative "profile.rb"
 require 'terminal-table'
 
 class ApiTable
-  def initialize
+  attr_reader :table, :profile
+
+  def initialize(nickname)
     @table = Terminal::Table.new
-    @profile = Profile.new(File.open('.codewars-nick').read)
+    @profile = Profile.new(nickname)
   end
 
   def create_table
-    set_style_table
+    config_table
 
-
-    table << [
-              profile.username, profile.languages.join("\n"), profile.rank,
-              profile.honor, profile.leaderboard, profile.total_completed
-             ]
-
-    table
-  end
-
-  def table
-    @table
+    table << profile.full_data
   end
 
   private
 
-  def set_style_table
+  def config_table
     table.style = {:all_separators => true, :alignment => :center}
     table.title = 'Codewars'
     table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
-  end
-
-  def profile
-    @profile
   end
 end

@@ -1,6 +1,8 @@
 require './lib/api/table.rb'
 
-table = ApiTable.new
+table = ApiTable.new(File.open('.codewars-nick').read)
 
 system('clear')
-puts table.create_table
+table.create_table
+
+puts table.table

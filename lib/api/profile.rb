@@ -2,9 +2,13 @@ require 'net/http'
 require 'json'
 
 class Profile
-  def initialize(nick)
-    @request = "https://www.codewars.com/api/v1/users/#{nick}"
+  def initialize(nickname)
+    @request = "https://www.codewars.com/api/v1/users/#{nickname}"
     @json = json_parse
+  end
+
+  def full_data
+    [username, languages.join("\n"), rank, honor, leaderboard, total_completed]
   end
 
   def username
@@ -36,6 +40,7 @@ class Profile
   def json_parse
     uri = URI(@request)
     response = Net::HTTP.get(uri)
+
     JSON.parse(response)
   end
 end
