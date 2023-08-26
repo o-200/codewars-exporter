@@ -1,4 +1,3 @@
-Заметил пару сложностей.
-1) у страницы бесконечный скроллинг (infinite scroll)
-2) доступ к completed_solutions есть только у авторизированных пользователей (use selenium)
-3)
+1. make choice to users - use ARGV for placing email and password or saving that in program
+2. Add CLI
+3. Save solutions by separate file
