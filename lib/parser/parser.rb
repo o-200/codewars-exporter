@@ -62,7 +62,9 @@ class Parser
     doc = Nokogiri::HTML.parse(browser.html)
     item_list = doc.css('.list-item-solutions')
 
-    puts 'parsing complete'
+    @browser.close
+    
+    puts 'parsing complete!'
     puts 'starting to separate files'
 
     separate_data(item_list)
