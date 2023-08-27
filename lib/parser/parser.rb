@@ -2,6 +2,7 @@ require "watir"
 require 'nokogiri'
 require 'fileutils'
 require 'pry-byebug'
+require "./lib/api/profile.rb"
 
 class Parser
   attr_accessor :browser
@@ -16,6 +17,7 @@ class Parser
   end
 
   def run
+    choice_language
     request_data
     login
 
@@ -38,6 +40,16 @@ class Parser
     puts "2) Save all resolutions to one file"
 
     gets.chomp
+  end
+
+  def choice_language
+    profile = Profile.new(File.open('.codewars-nick').read)
+
+    puts "choose the language which need to parse?"
+
+    puts "I am detected these languages: #{profile.languages.join(', ' )}"
+
+    @language = gets.chomp.to_s.downcase
   end
 
   def request_data
@@ -86,11 +98,13 @@ class Parser
     array = []
 
     @data.each do |item|
-      array.push({
-        solution_name: item.at_css('a').text,
-        kyu: item.at_css('.inner-small-hex').text,
-        solution: item.at_css('pre').text
-      })
+      if item.at_css('code').attr('data-language') == @language
+        array.push({
+          solution_name: item.at_css('a').text,
+          kyu: item.at_css('.inner-small-hex').text,
+          solution: item.at_css('pre').text
+        })
+      end
     end
 
     @data = array
@@ -98,12 +112,13 @@ class Parser
   end
 
   def place_by_files
-    Dir.mkdir("solutions")
+    binding.pry 
+    FileUtils.mkdir_p("solutions/#{@language}")
 
     @data.each do |n|
       name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
 
-      File.open(File.join('solutions', name_kyu), 'w') do |file|
+      File.open(File.join('solutions', @language, name_kyu), 'w') do |file|
         file.write(n[:solution])
       end
 
