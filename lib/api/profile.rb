@@ -7,7 +7,7 @@ module Api
   class Profile
     def initialize(nickname)
       @request = "https://www.codewars.com/api/v1/users/#{nickname}"
-      @json = json_parse
+      @json = json_request_parse
     end
 
     def full_data
@@ -40,7 +40,7 @@ module Api
 
     private
 
-    def json_parse
+    def json_request_parse
       uri = URI(@request)
       response = Net::HTTP.get(uri)
 
