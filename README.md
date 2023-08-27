@@ -1,16 +1,12 @@
 # animated-garbanzo
 
-main idea its to parse all solutions to one file and fast upload them to github
-
-yo, that's a test readme for me. Idea from random ruby chat and i am challenge myself ¯\_(ツ)_/¯
+Main idea is to parse all solutions to one file for uploading them to github
 
 api - https://dev.codewars.com/
 
+#### 1. setup application.
 
-# Usage ? (not completed yet)
-
-
-#### 1. setup application. Using that command you should save your nickname (or link later) on your codewars. generated file should using once
+#### use once
 ```ruby
 ruby bin/dev
 ```
@@ -20,7 +16,7 @@ ruby bin/dev
 ruby bin/api
 ```
 
-#### 3. If you wanna to parse your solutions just use:
+#### 3. If you want to parse your solutions just use:
 ```ruby
 ruby bin/parse
 ```
