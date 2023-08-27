@@ -17,13 +17,14 @@ class Parser
   def run
     request_data
     login
-    parse
+    
+    parse.separate_data.place_to_one_file
 
     puts "#{SOLUTION_FILE} was created! closing program..."
     @browser.close
   end
 
-  private
+  # private
 
   def request_data
     puts "starting request data..."
@@ -56,36 +57,38 @@ class Parser
 
   def parse
     @browser.goto(SOLUTIONS_URL)
-
     browser = scroll_to_bottom(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)
-    item_list = doc.css('.list-item-solutions')
+    @data = doc.css('.list-item-solutions')
 
-    @browser.close
-    
     puts 'parsing complete!'
-    puts 'starting to separate files'
+    @browser.close
 
-    separate_data(item_list)
-
+    self
   end
 
-  def separate_data(list)
-    list.each do |item|
-      hash = {
+  def separate_data
+    array = []
+
+    @data.each do |item|
+      array.push({
         solution_name: item.at_css('a').text,
         kyu: item.at_css('.inner-small-hex').text,
         solution: item.at_css('pre').text
-      }
-      place_to_file(hash)
+      })
     end
+
+    @data = array
+    self
   end
 
-  def place_to_file(hash)
-    File.write(SOLUTION_FILE, hash[:solution_name] + hash[:kyu] + "\n", mode: 'a')
+  def place_to_one_file
+    @data.each do |n|
+      File.write(SOLUTION_FILE, n[:solution_name] + n[:kyu] + "\n", mode: 'a')
 
-    File.write(SOLUTION_FILE, hash[:solution] + "\n\n", mode: 'a')
+      File.write(SOLUTION_FILE, n[:solution] + "\n\n", mode: 'a')
+    end
   end
 
   def scroll_to_bottom(browser)
