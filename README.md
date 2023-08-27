@@ -1,8 +1,17 @@
-# animated-garbanzo
+# codewars-exporter
 
 Main idea is to parse all solutions to one file for uploading them to github
 
 api - https://dev.codewars.com/
+
+# Functionality
+
+1. Check main info about profile
+2. Parse all solutions to one file
+3. Save solution per file
+4. Choosing language which to be parsed
+
+# Install
 
 #### 1. setup application.
 
