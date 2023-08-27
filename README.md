@@ -21,7 +21,7 @@ bundle install
 
 use once
 ```ruby
-ruby bin/dev
+ruby bin/setup
 ```
 
 #### 2. For using codewars-api (general information) functionality you should use:
