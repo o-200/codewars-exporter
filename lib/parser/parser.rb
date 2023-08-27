@@ -5,21 +5,24 @@ require 'pry-byebug'
 require "./lib/api/profile.rb"
 
 class Parser
-  attr_accessor :browser
+  attr_accessor :browser, :email, :password
+
+  def initialize(email = nil, password = nil)
+    @email = email
+    @password = password
+  end
 
   DATA_FILE = '.data'
   SOLUTION_FILE = 'solutions.txt'
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
   SOLUTIONS_URL = 'https://www.codewars.com/users/o-200/completed_solutions'
 
-  def initialize
-    @browser = Watir::Browser.new
-  end
-
   def run
     choice_language
-    request_data
+    request_login_pass
     login
+
+    puts "Starting parsing from browser"
 
     if choice_how_save == 1
       parse.separate_data.place_to_one_file
@@ -39,43 +42,38 @@ class Parser
     puts "1) Save every resolution to every file"
     puts "2) Save all resolutions to one file"
 
-    gets.chomp
+    $stdin.gets.chomp
   end
 
   def choice_language
     profile = Profile.new(File.open('.codewars-nick').read)
 
     puts "choose the language which need to parse?"
+    puts "I am detected these languages: #{profile.languages.join(', ')}"
 
-    puts "I am detected these languages: #{profile.languages.join(', ' )}"
-
-    @language = gets.chomp.to_s.downcase
+    @language = $stdin.gets.chomp.to_s.downcase
   end
 
-  def request_data
+  def request_login_pass
     puts "Starting request data..."
 
-    unless File.exists?(DATA_FILE)
+    if email.nil? || password.nil?
       puts "Enter your email:"
       email = gets.chomp
 
       puts "Enter your password:"
       pass = gets.chomp
-
-      file = File.new(DATA_FILE, 'w+')
-      File.write(file, [email, pass].join("\n"))
     else
       puts 'We already have data, skipping stage'
     end
   end
 
   def login
-    data = File.read(DATA_FILE).split("\n")
-
+    @browser = Watir::Browser.new
     @browser.goto(LOGIN_URL)
 
-    @browser.text_field(id: 'user_email').set(data[0])
-    @browser.text_field(id: 'user_password').set(data[1])
+    @browser.text_field(id: 'user_email').set(email)
+    @browser.text_field(id: 'user_password').set(password)
     @browser.button(type: 'submit').click
 
     return @browser
@@ -112,7 +110,6 @@ class Parser
   end
 
   def place_by_files
-    binding.pry 
     FileUtils.mkdir_p("solutions/#{@language}")
 
     @data.each do |n|

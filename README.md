@@ -27,6 +27,8 @@ ruby bin/api
 
 #### 3. If you want to parse your solutions just use:
 ```ruby
-ruby bin/parse
+ruby bin/parse <email> <password>
 ```
+
+<optional> - if you dont puts that, then you need to do that anyway when programm will asks you
 program will save solutions to file in project folder (anyway check console it will hints u)
