@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-# rubocop:disable Metrics/ClassLength
 
 require 'watir'
 require 'nokogiri'
@@ -17,7 +16,7 @@ class Parser
 
   attr_accessor :browser, :email, :password
 
-  def initialize(email = nil, password = nil)
+  def initialize(email=nil, password=nil)
     @email = email
     @password = password
   end
@@ -26,10 +25,9 @@ class Parser
     choice_language
     request_login_pass
     login
-
     choose_separate_save
 
-    puts "#{SOLUTION_FILE} was created! closing program..."
+    puts 'Work completed! Closing browser...'
     @browser.close
   end
 
@@ -38,9 +36,11 @@ class Parser
   def choose_separate_save
     puts 'Prepairing for parsing from browser'
     if choice_how_save == 1
-      parse.separate_data.place_to_one_file
-    else
       parse.separate_data.place_by_files
+      puts "#{SOLUTION_PATH} was created! closing program..."
+    else
+      parse.separate_data.place_to_one_file
+      puts "#{SOLUTION_FILE} was created! closing program..."
     end
   end
 
@@ -70,7 +70,7 @@ class Parser
       @email = gets.chomp
 
       puts 'Enter your password:'
-      @password  = gets.chomp
+      @password = gets.chomp
     else
       puts 'We already have data, skipping stage'
     end
@@ -110,10 +110,10 @@ class Parser
     @data.each do |item|
       if item.at_css('code').attr('data-language') == @language
         array.push({
-          solution_name: item.at_css('a').text,
-          kyu: item.at_css('.inner-small-hex').text,
-          solution: item.at_css('pre').text
-        })
+                     solution_name: item.at_css('a').text,
+                     kyu:           item.at_css('.inner-small-hex').text,
+                     solution:      item.at_css('pre').text
+                   })
       end
     end
 
@@ -139,7 +139,7 @@ class Parser
     @data.each do |n|
       File.write(SOLUTION_FILE, "#{n[:solution_name]} #{n[:kyu]}\n", mode: 'a')
 
-      File.write(SOLUTION_FILE, "#{n[:solution]} + \n\n", mode: 'a')
+      File.write(SOLUTION_FILE, "#{n[:solution]}\n\n", mode: 'a')
     end
   end
 
