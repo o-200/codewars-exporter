@@ -12,10 +12,14 @@ api - https://dev.codewars.com/
 4. Choosing language which to be parsed
 
 # Install
+#### 0. Install gems:
+```ruby
+bundle install
+```
 
 #### 1. setup application.
 
-#### use once
+use once
 ```ruby
 ruby bin/dev
 ```
