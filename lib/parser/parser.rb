@@ -1,5 +1,6 @@
 require "watir"
 require 'nokogiri'
+require 'fileutils'
 require 'pry-byebug'
 
 class Parser
@@ -17,17 +18,30 @@ class Parser
   def run
     request_data
     login
-    
-    parse.separate_data.place_to_one_file
+
+    if choice_how_save == 1
+      parse.separate_data.place_to_one_file
+    else
+      parse.separate_data.place_by_files
+    end
 
     puts "#{SOLUTION_FILE} was created! closing program..."
     @browser.close
   end
 
-  # private
+  protected
+
+  def choice_how_save
+    puts "Choose how's save files"
+
+    puts "1) Save every resolution to every file"
+    puts "2) Save all resolutions to one file"
+
+    gets.chomp
+  end
 
   def request_data
-    puts "starting request data..."
+    puts "Starting request data..."
 
     unless File.exists?(DATA_FILE)
       puts "Enter your email:"
@@ -81,6 +95,20 @@ class Parser
 
     @data = array
     self
+  end
+
+  def place_by_files
+    Dir.mkdir("solutions")
+
+    @data.each do |n|
+      name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
+
+      File.open(File.join('solutions', name_kyu), 'w') do |file|
+        file.write(n[:solution])
+      end
+
+      puts name_kyu
+    end
   end
 
   def place_to_one_file
