@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'net/http'
 require 'json'
 
@@ -44,4 +46,3 @@ class Profile
     JSON.parse(response)
   end
 end
-
