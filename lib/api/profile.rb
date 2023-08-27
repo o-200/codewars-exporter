@@ -3,46 +3,48 @@
 require 'net/http'
 require 'json'
 
-class Profile
-  def initialize(nickname)
-    @request = "https://www.codewars.com/api/v1/users/#{nickname}"
-    @json = json_parse
-  end
+module Api
+  class Profile
+    def initialize(nickname)
+      @request = "https://www.codewars.com/api/v1/users/#{nickname}"
+      @json = json_parse
+    end
 
-  def full_data
-    [username, languages.join("\n"), rank, honor, leaderboard, total_completed]
-  end
+    def full_data
+      [username, languages.join("\n"), rank, honor, leaderboard, total_completed]
+    end
 
-  def username
-    @json['username']
-  end
+    def username
+      @json['username']
+    end
 
-  def honor
-    @json['honor']
-  end
+    def honor
+      @json['honor']
+    end
 
-  def rank
-    @json['ranks']['overall']['name']
-  end
+    def rank
+      @json['ranks']['overall']['name']
+    end
 
-  def languages
-    @json['ranks']['languages'].keys
-  end
+    def languages
+      @json['ranks']['languages'].keys
+    end
 
-  def leaderboard
-    @json['leaderboardPosition']
-  end
+    def leaderboard
+      @json['leaderboardPosition']
+    end
 
-  def total_completed
-    @json['codeChallenges']['totalCompleted']
-  end
+    def total_completed
+      @json['codeChallenges']['totalCompleted']
+    end
 
-  private
+    private
 
-  def json_parse
-    uri = URI(@request)
-    response = Net::HTTP.get(uri)
+    def json_parse
+      uri = URI(@request)
+      response = Net::HTTP.get(uri)
 
-    JSON.parse(response)
+      JSON.parse(response)
+    end
   end
 end

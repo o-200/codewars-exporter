@@ -2,7 +2,7 @@
 
 require './lib/api/table'
 
-table = ApiTable.new(File.open('.codewars-nick').read)
+table = Api::Table.new(File.open('.codewars-nick').read)
 
 system('clear')
 table.create_table

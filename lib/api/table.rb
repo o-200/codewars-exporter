@@ -3,25 +3,27 @@
 require_relative 'profile'
 require 'terminal-table'
 
-class ApiTable
-  attr_reader :table, :profile
+module Api
+  class Table
+    attr_reader :table, :profile
 
-  def initialize(nickname)
-    @table = Terminal::Table.new
-    @profile = Profile.new(nickname)
-  end
+    def initialize(nickname)
+      @table = Terminal::Table.new
+      @profile = Api::Profile.new(nickname)
+    end
 
-  def create_table
-    config_table
+    def create_table
+      config_table
 
-    table << profile.full_data
-  end
+      table << profile.full_data
+    end
 
-  private
+    private
 
-  def config_table
-    table.style = {all_separators: true, alignment: :center}
-    table.title = 'Codewars'
-    table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
+    def config_table
+      table.style = {all_separators: true, alignment: :center}
+      table.title = 'Codewars'
+      table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
+    end
   end
 end
