@@ -1,4 +1,4 @@
-require_relative "profile.rb"
+require_relative 'profile'
 require 'terminal-table'
 
 class ApiTable
@@ -18,7 +18,7 @@ class ApiTable
   private
 
   def config_table
-    table.style = {:all_separators => true, :alignment => :center}
+    table.style = { all_separators: true, alignment: :center }
     table.title = 'Codewars'
     table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
   end

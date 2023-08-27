@@ -1,13 +1,16 @@
-require "watir"
+# frozen_string_literal: true
+# rubocop:disable Metrics/ClassLength
+
+require 'watir'
 require 'nokogiri'
 require 'fileutils'
-require "./lib/api/profile.rb"
+require './lib/api/profile'
 
 require 'pry-byebug'
 
 class Parser
   DATA_FILE = '.data'
-  SOLUTION_FILE = "solution.txt"
+  SOLUTION_FILE = 'solution.txt'
   SOLUTION_PATH = "solutions/#{@language}"
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
   SOLUTIONS_URL = 'https://www.codewars.com/users/o-200/completed_solutions'
@@ -33,7 +36,7 @@ class Parser
   protected
 
   def choose_separate_save
-    puts "Prepairing for parsing from browser"
+    puts 'Prepairing for parsing from browser'
     if choice_how_save == 1
       parse.separate_data.place_to_one_file
     else
@@ -44,8 +47,8 @@ class Parser
   def choice_how_save
     puts "Choose how's save files"
 
-    puts "1) Save every resolution to every file"
-    puts "2) Save all resolutions to one file"
+    puts '1) Save every resolution to every file'
+    puts '2) Save all resolutions to one file'
 
     $stdin.gets.chomp.to_i
   end
@@ -53,20 +56,20 @@ class Parser
   def choice_language
     profile = Profile.new(File.open('.codewars-nick').read)
 
-    puts "choose the language which need to parse?"
+    puts 'choose the language which need to parse?'
     puts "I am detected these languages: #{profile.languages.join(', ')}"
 
     @language = $stdin.gets.chomp.to_s.downcase
   end
 
   def request_login_pass
-    puts "Starting request data..."
+    puts 'Starting request data...'
 
     if email.nil? || password.nil?
-      puts "Enter your email:"
+      puts 'Enter your email:'
       @email = gets.chomp
 
-      puts "Enter your password:"
+      puts 'Enter your password:'
       @password  = gets.chomp
     else
       puts 'We already have data, skipping stage'
@@ -85,7 +88,7 @@ class Parser
     @browser.text_field(id: 'user_password').set(password)
     @browser.button(type: 'submit').click
 
-    return @browser
+    @browser
   end
 
   def parse
@@ -134,9 +137,9 @@ class Parser
 
   def place_to_one_file
     @data.each do |n|
-      File.write(SOLUTION_FILE, n[:solution_name] + n[:kyu] + "\n", mode: 'a')
+      File.write(SOLUTION_FILE, "#{n[:solution_name]} #{n[:kyu]}\n", mode: 'a')
 
-      File.write(SOLUTION_FILE, n[:solution] + "\n\n", mode: 'a')
+      File.write(SOLUTION_FILE, "#{n[:solution]} + \n\n", mode: 'a')
     end
   end
 
@@ -146,9 +149,7 @@ class Parser
       browser.scroll.to :bottom
       sleep(2)
 
-      break if browser.links.size == link_number
+      return browser if browser.links.size == link_number
     end
-
-    browser
   end
 end

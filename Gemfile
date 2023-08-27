@@ -6,3 +6,5 @@ gem 'watir', '~> 6.16', '>= 6.16.5'
 gem 'webdrivers', '~> 5.3', '>= 5.3.1'
 gem 'selenium-webdriver', '~> 4.4'
 gem 'pry-byebug'
+
+gem 'rubocop', require: false

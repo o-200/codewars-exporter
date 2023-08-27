@@ -1,4 +1,6 @@
-require './lib/api/table.rb'
+# frozen_string_literal: false
+
+require './lib/api/table'
 
 table = ApiTable.new(File.open('.codewars-nick').read)
 
