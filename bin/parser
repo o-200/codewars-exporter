@@ -1,8 +1,4 @@
 require './lib/parser/parser.rb'
-require 'pry-byebug'
-
-# puts ARGV
-binding.pry
 
 parser = Parser.new(ARGV[0], ARGV[1])
 parser.run

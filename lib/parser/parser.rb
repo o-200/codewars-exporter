@@ -1,7 +1,6 @@
 require "watir"
 require 'nokogiri'
 require 'fileutils'
-require 'pry-byebug'
 require "./lib/api/profile.rb"
 
 class Parser
@@ -59,10 +58,10 @@ class Parser
 
     if email.nil? || password.nil?
       puts "Enter your email:"
-      email = gets.chomp
+      @email = gets.chomp
 
       puts "Enter your password:"
-      pass = gets.chomp
+      @password  = gets.chomp
     else
       puts 'We already have data, skipping stage'
     end
@@ -72,8 +71,8 @@ class Parser
     @browser = Watir::Browser.new
     @browser.goto(LOGIN_URL)
 
-    @browser.text_field(id: 'user_email').set(email)
-    @browser.text_field(id: 'user_password').set(password)
+    @browser.text_field(id: 'user_email').set(@email)
+    @browser.text_field(id: 'user_password').set(@password)
     @browser.button(type: 'submit').click
 
     return @browser
