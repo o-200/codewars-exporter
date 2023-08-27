@@ -3,7 +3,15 @@ require 'nokogiri'
 require 'fileutils'
 require "./lib/api/profile.rb"
 
+require 'pry-byebug'
+
 class Parser
+  DATA_FILE = '.data'
+  SOLUTION_FILE = "solution.txt"
+  SOLUTION_PATH = "solutions/#{@language}"
+  LOGIN_URL = 'https://www.codewars.com/users/sign_in'
+  SOLUTIONS_URL = 'https://www.codewars.com/users/o-200/completed_solutions'
+
   attr_accessor :browser, :email, :password
 
   def initialize(email = nil, password = nil)
@@ -11,23 +19,12 @@ class Parser
     @password = password
   end
 
-  DATA_FILE = '.data'
-  SOLUTION_FILE = 'solutions.txt'
-  LOGIN_URL = 'https://www.codewars.com/users/sign_in'
-  SOLUTIONS_URL = 'https://www.codewars.com/users/o-200/completed_solutions'
-
   def run
     choice_language
     request_login_pass
     login
 
-    puts "Starting parsing from browser"
-
-    if choice_how_save == 1
-      parse.separate_data.place_to_one_file
-    else
-      parse.separate_data.place_by_files
-    end
+    choose_separate_save
 
     puts "#{SOLUTION_FILE} was created! closing program..."
     @browser.close
@@ -35,13 +32,22 @@ class Parser
 
   protected
 
+  def choose_separate_save
+    puts "Prepairing for parsing from browser"
+    if choice_how_save == 1
+      parse.separate_data.place_to_one_file
+    else
+      parse.separate_data.place_by_files
+    end
+  end
+
   def choice_how_save
     puts "Choose how's save files"
 
     puts "1) Save every resolution to every file"
     puts "2) Save all resolutions to one file"
 
-    $stdin.gets.chomp
+    $stdin.gets.chomp.to_i
   end
 
   def choice_language
@@ -67,12 +73,16 @@ class Parser
     end
   end
 
-  def login
+  def start_browser
     @browser = Watir::Browser.new
+  end
+
+  def login
+    start_browser
     @browser.goto(LOGIN_URL)
 
-    @browser.text_field(id: 'user_email').set(@email)
-    @browser.text_field(id: 'user_password').set(@password)
+    @browser.text_field(id: 'user_email').set(email)
+    @browser.text_field(id: 'user_password').set(password)
     @browser.button(type: 'submit').click
 
     return @browser
@@ -80,7 +90,7 @@ class Parser
 
   def parse
     @browser.goto(SOLUTIONS_URL)
-    browser = scroll_to_bottom(@browser)
+    browser = scroll_to_bottom_page(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)
     @data = doc.css('.list-item-solutions')
@@ -109,12 +119,12 @@ class Parser
   end
 
   def place_by_files
-    FileUtils.mkdir_p("solutions/#{@language}")
+    FileUtils.mkdir_p(SOLUTION_PATH)
 
     @data.each do |n|
       name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
 
-      File.open(File.join('solutions', @language, name_kyu), 'w') do |file|
+      File.open(File.join(SOLUTION_PATH, name_kyu), 'w') do |file|
         file.write(n[:solution])
       end
 
@@ -130,11 +140,11 @@ class Parser
     end
   end
 
-  def scroll_to_bottom(browser)
+  def scroll_to_bottom_page(browser)
     loop do
       link_number = browser.links.size
       browser.scroll.to :bottom
-      sleep(3)
+      sleep(2)
 
       break if browser.links.size == link_number
     end
