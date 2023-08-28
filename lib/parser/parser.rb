@@ -40,7 +40,7 @@ class Parser
       puts "#{SOLUTION_PATH} was created! closing program..."
     else
       parse.separate_data.place_to_one_file
-      puts "#{SOLUTION_FILE} was created! closing program..."
+      puts "'#{SOLUTION_FILE}' was created! closing program..."
     end
   end
 
@@ -54,7 +54,7 @@ class Parser
   end
 
   def choice_language
-    profile = Profile.new(File.open('.codewars-nick').read)
+    profile = Api::Profile.new(File.open('.codewars-nick').read)
 
     puts 'choose the language which need to parse?'
     puts "I am detected these languages: #{profile.languages.join(', ')}"
@@ -105,19 +105,15 @@ class Parser
   end
 
   def separate_data
-    array = []
+    @data = @data.select {|item| item.at('code')['data-language'] == @language }
+                 .map {|item|
+      {
+        solution_name: item.at_css('a').text,
+        kyu:           item.at_css('.inner-small-hex').text,
+        solution:      item.at_css('pre').text
+      }
+    }
 
-    @data.each do |item|
-      if item.at_css('code').attr('data-language') == @language
-        array.push({
-                     solution_name: item.at_css('a').text,
-                     kyu:           item.at_css('.inner-small-hex').text,
-                     solution:      item.at_css('pre').text
-                   })
-      end
-    end
-
-    @data = array
     self
   end
 
