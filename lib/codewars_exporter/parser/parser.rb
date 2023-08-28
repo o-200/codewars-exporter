@@ -3,7 +3,7 @@
 require 'watir'
 require 'nokogiri'
 require 'fileutils'
-require './lib/codewars_exporter'
+require './lib/codewars_exporter/api/profile'
 
 require 'pry-byebug'
 
