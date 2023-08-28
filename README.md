@@ -28,17 +28,17 @@ bundle install
 
 use once
 ```ruby
-ruby bin/setup
+bin/setup
 ```
 
 #### 2. For using codewars-api (general information) functionality you should use:
 ```ruby
-ruby bin/api
+bin/api
 ```
 
 #### 3. If you want to parse your solutions just use:
 ```ruby
-ruby bin/parser <email> <password>
+bin/parser <email> <password>
 ```
 
 "<>" - if you dont puts that, programm anyway will asks you about data.
