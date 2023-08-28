@@ -4,6 +4,7 @@ require 'watir'
 require 'nokogiri'
 require 'fileutils'
 require './lib/codewars_exporter/api/profile'
+require_relative 'nickname_parser'
 
 require 'pry-byebug'
 
@@ -12,7 +13,6 @@ class Parser
   SOLUTION_FILE = 'solution.txt'
   SOLUTION_PATH = "solutions/#{@language}"
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
-  SOLUTIONS_URL = 'https://www.codewars.com/users/o-200/completed_solutions'
 
   attr_accessor :browser, :email, :password
 
@@ -22,8 +22,11 @@ class Parser
   end
 
   def run
-    choice_language
     request_login_pass
+    find_nick
+
+    choice_language
+
     login
     choose_separate_save
 
@@ -32,6 +35,16 @@ class Parser
   end
 
   protected
+
+  def find_nick
+    parser = NicknameParser.new(@email, @password)
+    parser.run
+    @nickname = parser.username
+  end
+
+  def solution_url
+    "https://www.codewars.com/users/#{@nickname}/completed_solutions"
+  end
 
   def choose_separate_save
     puts 'Prepairing for parsing from browser'
@@ -54,7 +67,7 @@ class Parser
   end
 
   def choice_language
-    profile = Api::Profile.new(File.open('.codewars-nick').read)
+    profile = Api::Profile.new(@nickname)
 
     puts 'choose the language which need to parse?'
     puts "I am detected these languages: #{profile.languages.join(', ')}"
@@ -92,7 +105,7 @@ class Parser
   end
 
   def parse
-    @browser.goto(SOLUTIONS_URL)
+    @browser.goto(solution_url)
     browser = scroll_to_bottom_page(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)

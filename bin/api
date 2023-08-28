@@ -1,11 +1,15 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: false
 
-require './lib/codewars_exporter'
+require './lib/codewars_exporter/parser/nickname_parser'
+require './lib/codewars_exporter/api/profile'
+require './lib/codewars_exporter/api/table'
 
-table = Api::Table.new(File.open('.codewars-nick').read)
+parser = NicknameParser.new(ARGV[0], ARGV[1])
+parser.run
 
-system('clear')
+table = Api::Table.new(parser.username)
 table.create_table
 
-puts table.table # ???
+system('clear')
+puts table.table
