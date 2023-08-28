@@ -18,12 +18,7 @@ api - https://dev.codewars.com/
 Pretty good if you installed ruby <3
 ```
 
-# Install
-#### 0. Install gems:
-```ruby
-bundle install
-```
-
+# Usage
 #### 1. setup application.
 
 use once
