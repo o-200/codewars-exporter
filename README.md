@@ -33,12 +33,10 @@ bin/setup
 
 #### 2. For using codewars-api (general information) functionality you should use:
 ```ruby
-bin/api
+bin/api <email> <password>
 ```
 
 #### 3. If you want to parse your solutions just use:
 ```ruby
 bin/parser <email> <password>
 ```
-
-"<>" - if you dont puts that, programm anyway will asks you about data.
