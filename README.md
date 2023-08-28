@@ -20,10 +20,8 @@ Pretty good if you installed ruby <3
 
 # Usage
 #### 1. setup application.
-
-use once
 ```ruby
-bin/setup
+bundle install
 ```
 
 #### 2. For using codewars-api (general information) functionality you should use:
