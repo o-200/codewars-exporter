@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require './lib/api/table'
+require './lib/codewars_exporter'
 
 table = Api::Table.new(File.open('.codewars-nick').read)
 

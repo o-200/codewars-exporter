@@ -1,6 +1,6 @@
 # frozen_string_literal: false
 
-require './lib/parser/parser'
+require './lib/codewars_exporter'
 
 parser = Parser.new(ARGV[0], ARGV[1])
 parser.run

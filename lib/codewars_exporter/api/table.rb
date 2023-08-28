@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'profile'
+require './lib/codewars_exporter'
 require 'terminal-table'
 
 module Api
