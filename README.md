@@ -1,5 +1,7 @@
 # codewars-exporter
 
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+
 Main idea is to parse all solutions to one file for uploading them to github
 
 api - https://dev.codewars.com/
