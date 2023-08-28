@@ -1,4 +1,7 @@
-require './lib/parser/parser.rb'
+#!/usr/bin/env ruby
+# frozen_string_literal: false
+
+require './lib/codewars_exporter'
 
 parser = Parser.new(ARGV[0], ARGV[1])
 parser.run

@@ -1,6 +1,9 @@
-require './lib/api/table.rb'
+#!/usr/bin/env ruby
+# frozen_string_literal: false
 
-table = ApiTable.new(File.open('.codewars-nick').read)
+require './lib/codewars_exporter'
+
+table = Api::Table.new(File.open('.codewars-nick').read)
 
 system('clear')
 table.create_table

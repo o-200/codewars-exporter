@@ -1,5 +1,7 @@
 # codewars-exporter
 
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
+
 Main idea is to parse all solutions to one file for uploading them to github
 
 api - https://dev.codewars.com/
@@ -11,6 +13,11 @@ api - https://dev.codewars.com/
 3. Save solution per file
 4. Choosing language which to be parsed
 
+# Requirements
+```
+Pretty good if you installed ruby <3
+```
+
 # Install
 #### 0. Install gems:
 ```ruby
@@ -21,18 +28,17 @@ bundle install
 
 use once
 ```ruby
-ruby bin/setup
+bin/setup
 ```
 
 #### 2. For using codewars-api (general information) functionality you should use:
 ```ruby
-ruby bin/api
+bin/api
 ```
 
 #### 3. If you want to parse your solutions just use:
 ```ruby
-ruby bin/parser <email> <password>
+bin/parser <email> <password>
 ```
 
-<optional> - if you dont puts that, then you need to do that anyway when programm will asks you
-program will save solutions to file in project folder (anyway check console it will hints u)
+"<>" - if you dont puts that, programm anyway will asks you about data.
