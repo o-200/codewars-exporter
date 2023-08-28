@@ -11,6 +11,11 @@ api - https://dev.codewars.com/
 3. Save solution per file
 4. Choosing language which to be parsed
 
+# Requirements
+```
+Pretty good if you installed ruby <3
+```
+
 # Install
 #### 0. Install gems:
 ```ruby
@@ -34,5 +39,4 @@ ruby bin/api
 ruby bin/parser <email> <password>
 ```
 
-<optional> - if you dont puts that, then you need to do that anyway when programm will asks you
-program will save solutions to file in project folder (anyway check console it will hints u)
+"<>" - if you dont puts that, programm anyway will asks you about data.
