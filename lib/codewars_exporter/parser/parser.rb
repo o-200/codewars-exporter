@@ -22,9 +22,11 @@ class Parser
   end
 
   def run
+    binding.pry
     request_login_pass
     find_nick
 
+    choice_how_save
     choice_language
 
     login
@@ -37,6 +39,9 @@ class Parser
   protected
 
   def find_nick
+    puts 'login to codewars and them parse your nickname...'
+    sleep(3)
+
     parser = NicknameParser.new(@email, @password)
     parser.run
     @nickname = parser.username
@@ -47,8 +52,8 @@ class Parser
   end
 
   def choose_separate_save
-    puts 'Prepairing for parsing from browser'
-    if choice_how_save == 1
+    puts 'Start parsing solutions!'
+    if @choice_save == 1
       parse.separate_data.place_by_files
       puts "#{SOLUTION_PATH} was created! closing program..."
     else
@@ -60,10 +65,12 @@ class Parser
   def choice_how_save
     puts "Choose how's save files"
 
-    puts '1) Save every resolution to every file'
-    puts '2) Save all resolutions to one file'
+    puts '1) Save every solution to every file'
+    puts '2) Save all solutions to one file'
 
-    $stdin.gets.chomp.to_i
+    @choice_save = $stdin.gets.chomp.to_i
+
+    puts "#{@choice_save == 1 ? 'solutions to every file' : 'solutions to one file'}"
   end
 
   def choice_language
@@ -73,6 +80,8 @@ class Parser
     puts "I am detected these languages: #{profile.languages.join(', ')}"
 
     @language = $stdin.gets.chomp.to_s.downcase
+
+    puts "okay, your choise is #{@language}"
   end
 
   def request_login_pass
@@ -94,6 +103,9 @@ class Parser
   end
 
   def login
+    puts 'login to codewars and them start parse, get some coffee if you have a lot of solutions'
+    sleep(3)
+
     start_browser
     @browser.goto(LOGIN_URL)
 
