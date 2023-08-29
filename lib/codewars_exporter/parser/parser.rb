@@ -6,8 +6,6 @@ require 'fileutils'
 require './lib/codewars_exporter/api/profile'
 require_relative 'nickname_parser'
 
-require 'pry-byebug'
-
 class Parser
   DATA_FILE = '.data'
   SOLUTION_FILE = 'solution.txt'
@@ -22,7 +20,6 @@ class Parser
   end
 
   def run
-    binding.pry
     request_login_pass
     find_nick
 
@@ -70,7 +67,7 @@ class Parser
 
     @choice_save = $stdin.gets.chomp.to_i
 
-    puts "#{@choice_save == 1 ? 'solutions to every file' : 'solutions to one file'}"
+    puts(@choice_save == 1 ? 'solutions to every file' : 'solutions to one file')
   end
 
   def choice_language

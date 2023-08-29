@@ -18,27 +18,18 @@ api - https://dev.codewars.com/
 Pretty good if you installed ruby <3
 ```
 
-# Install
-#### 0. Install gems:
+# Usage
+#### 1. setup application.
 ```ruby
 bundle install
 ```
 
-#### 1. setup application.
-
-use once
-```ruby
-bin/setup
-```
-
 #### 2. For using codewars-api (general information) functionality you should use:
 ```ruby
-bin/api
+bin/api <email> <password>
 ```
 
 #### 3. If you want to parse your solutions just use:
 ```ruby
 bin/parser <email> <password>
 ```
-
-"<>" - if you dont puts that, programm anyway will asks you about data.
