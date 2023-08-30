@@ -17,6 +17,9 @@ api - https://dev.codewars.com/
 ```
 Pretty good if you installed ruby <3
 ```
+```
+You can use application only with email and password from codewars (any other methods to login like Oauth doesnt worked)
+```
 
 # Usage
 #### 1. setup application.
