@@ -2,9 +2,10 @@
 
 [![Ruby Style Guide](https://img.shields.io/badge/code_style-rubocop-brightgreen.svg)](https://github.com/rubocop/rubocop)
 
-Main idea is to parse all solutions to one file for uploading them to github
+codewars-exporter is a prototype application which parse solutions from [codewars.com](https://www.codewars.com/dashboard) to local file. You can optionally choose languages and save methods.
 
-api - https://dev.codewars.com/
+# api 
+https://dev.codewars.com/
 
 # Functionality
 
@@ -16,8 +17,6 @@ api - https://dev.codewars.com/
 # Requirements
 ```
 Pretty good if you installed ruby <3
-```
-```
 You can use application only with email and password from codewars (any other methods to login like Oauth doesnt worked)
 ```
 
