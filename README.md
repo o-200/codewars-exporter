@@ -21,6 +21,11 @@ You can use application only with email and password from codewars (any other me
 ```
 
 # Usage
+
+#### 0. You have to install web-driver for your browser
+```
+http://watir.com/guides/drivers/
+```
 #### 1. setup application.
 ```ruby
 bundle install
