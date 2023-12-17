@@ -21,17 +21,22 @@ You can use application only with email and password from codewars (any other me
 ```
 
 # Usage
-#### 1. setup application.
-```ruby
-bundle install
+#### 1. build docker image.
+```bash
+docker build -t codewars-exporter .
 ```
 
-#### 2. For using codewars-api (general information) functionality you should use:
+#### 2. run docker container.
+```bash
+docker run -itv ~/Projects/codewars-exporter:/codewars-exporter codewars-exporter bash
+```
+
+#### 3. For using codewars-api (general information) functionality you should use:
 ```ruby
 bin/api <email> <password>
 ```
 
-#### 3. If you want to parse your solutions just use:
+#### 4. If you want to parse your solutions just use:
 ```ruby
 bin/parser <email> <password>
 ```
