@@ -96,7 +96,7 @@ class Parser
   end
 
   def start_browser
-    @browser = Watir::Browser.new
+    @browser = Watir::Browser.new :firefox, headless: true
   end
 
   def login
