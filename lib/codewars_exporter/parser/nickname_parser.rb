@@ -11,7 +11,7 @@ class NicknameParser
   attr_reader :email, :password, :username
 
   def initialize(email, password)
-    @browser = Watir::Browser.new
+    @browser = Watir::Browser.new :firefox, headless: true
     @email = email
     @password = password
   end
