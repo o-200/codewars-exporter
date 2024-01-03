@@ -11,6 +11,8 @@ class NicknameParser
   attr_reader :email, :password, :username
 
   def initialize(email, password)
+    Selenium::WebDriver::Firefox.path='/usr/bin/firefox-esr'
+  
     @browser = Watir::Browser.new :firefox, headless: true
     @email = email
     @password = password
