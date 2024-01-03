@@ -96,7 +96,7 @@ class Parser
   end
 
   def start_browser
-    Selenium::WebDriver::Firefox.path='/usr/bin/firefox-esr'
+    Selenium::WebDriver::Firefox.path= Dir['/usr/bin/firefox*'][0]
     
     @browser = Watir::Browser.new :firefox, headless: true
   end
