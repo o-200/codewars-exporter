@@ -21,6 +21,11 @@ You can use application only with email and password from codewars (any other me
 ```
 
 # Usage
+
+#### 0. You have to install web-driver for your browser (we are using chrome by default)
+```
+http://watir.com/guides/drivers/
+```
 #### 1. setup application.
 ```ruby
 bundle install
@@ -35,3 +40,10 @@ bin/api <email> <password>
 ```ruby
 bin/parser <email> <password>
 ```
+
+# Contribution
+
+1. Select issue and write comment like: "I want to take the issue"
+2. Wait my answer
+3. Fork the repository, create branch with issue name
+4. When task is complete - create pull request and tell me about status of task
