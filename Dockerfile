@@ -1,16 +1,18 @@
-FROM ruby:3.2.1
+FROM ruby:3.2.1-alpine
 
-ARG RAILS_ROOT=/codewars-exporter
+ARG APP_ROOT=/codewars-exporter
+ARG PACKAGES="firefox-esr make build-base"
 
-RUN apt-get update 
-RUN apt install -y firefox-esr
+RUN apk update \
+    && apk upgrade \
+    && apk add --update --no-cache $PACKAGES
 
-RUN mkdir $RAILS_ROOT
-WORKDIR $RAILS_ROOT
+RUN mkdir $APP_ROOT
+WORKDIR $APP_ROOT
 
 COPY Gemfile Gemfile.lock  ./
 
 RUN bundle install
 
-ADD . $RAILS_ROOT
-ENV PATH=$RAILS_ROOT/bin:${PATH}
+ADD . $APP_ROOT
+ENV PATH=$APP_ROOT/bin:${PATH}
