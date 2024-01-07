@@ -15,10 +15,10 @@ https://dev.codewars.com/
 4. Choosing language which to be parsed
 
 # Requirements
-```
-Pretty good if you installed ruby <3
-You can use application only with email and password from codewars (any other methods to login like Oauth doesnt worked)
-```
+
+1. Pretty good if you have installed ruby <3
+2. Email and password from codewars (any other methods to login like Oauth doesnt worked)
+
 
 # Usage
 
@@ -26,7 +26,7 @@ You can use application only with email and password from codewars (any other me
 ```
 http://watir.com/guides/drivers/
 ```
-#### 1. setup application.
+#### 1. Setup application:
 ```ruby
 bundle install
 ```
