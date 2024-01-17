@@ -7,6 +7,6 @@ gem 'pry-byebug'
 gem 'selenium-webdriver', '~> 4.4'
 gem 'terminal-table', '~> 1.8'
 gem 'watir', '~> 7.2'
-gem 'webdrivers', '~> 5.3', '>= 5.3.1'
+gem 'webdrivers', '= 5.3.0'
 
 gem 'rubocop', require: false
