@@ -11,9 +11,7 @@ require_relative 'nickname_parser'
 class Parser
   DATA_FILE = '.data'
   SOLUTION_FILE = 'solution.txt'
-  SOLUTION_PATH = "solutions/#{@language}"
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
-  SOLUTION_URL = "https://www.codewars.com/users/#{@nickname}/completed_solutions"
 
   attr_accessor :browser, :email, :password
 
@@ -51,12 +49,23 @@ class Parser
     @nickname = parser.username
   end
 
+  def choice_how_save
+    puts "Choose how's save files"
+
+    puts '1) Save every solution to every file'
+    puts '2) Save all solutions to one file'
+
+    @choice_save = $stdin.gets.chomp.to_i
+
+    puts(@choice_save == 1 ? 'solutions to every file' : 'solutions to one file')
+  end
+
   # starting save process
   def choose_separate_save
     puts 'Start parsing solutions!'
     if @choice_save == 1
       parse.separate_data.place_by_files
-      puts "#{SOLUTION_PATH} was created! closing program..."
+      puts "#{solution_path} was created! closing program..."
     else
       parse.separate_data.place_to_one_file
       puts "'#{SOLUTION_FILE}' was created! closing program..."
@@ -96,9 +105,7 @@ class Parser
     puts 'login to codewars and them start parse, get some coffee if you have a lot of solutions'
     sleep(3)
 
-    start_browser
     @browser.goto(LOGIN_URL)
-
     @browser.text_field(id: 'user_email').set(email)
     @browser.text_field(id: 'user_password').set(password)
     @browser.button(type: 'submit').click
@@ -109,7 +116,7 @@ class Parser
   # parsing process
   # redirect to solution page and saves all page
   def parse
-    @browser.goto(SOLUTION_URL)
+    @browser.goto(solution_url)
     browser = scroll_to_bottom_page(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)
@@ -139,12 +146,12 @@ class Parser
   # create many files-solutions
   # to separate folder
   def place_by_files
-    FileUtils.mkdir_p(SOLUTION_PATH)
+    FileUtils.mkdir_p(solution_path)
 
     @data.each do |n|
       name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
 
-      File.open(File.join(SOLUTION_PATH, name_kyu), 'w') do |file|
+      File.open(File.join(solution_path, name_kyu), 'w') do |file|
         file.write(n[:solution])
       end
 
@@ -170,5 +177,13 @@ class Parser
 
       return browser if browser.links.size == link_number
     end
+  end
+
+  def solution_path
+    "solutions/#{@language}"
+  end
+
+  def solution_url
+    "https://www.codewars.com/users/#{@nickname}/completed_solutions"
   end
 end
