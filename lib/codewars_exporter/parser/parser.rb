@@ -6,19 +6,25 @@ require 'fileutils'
 require './lib/codewars_exporter/api/profile'
 require_relative 'nickname_parser'
 
+##
+# This class is a parser which getting and represents solutions
 class Parser
   DATA_FILE = '.data'
   SOLUTION_FILE = 'solution.txt'
   SOLUTION_PATH = "solutions/#{@language}"
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
+  SOLUTION_URL = "https://www.codewars.com/users/#{@nickname}/completed_solutions"
 
   attr_accessor :browser, :email, :password
 
   def initialize(email=nil, password=nil)
     @email = email
     @password = password
+
+    @browser = Watir::Browser.new :firefox, headless: true
   end
 
+  # main method which takes parsing and saving process
   def run
     request_login_pass
     find_nick
@@ -35,6 +41,7 @@ class Parser
 
   protected
 
+  # searching of username in codewars
   def find_nick
     puts 'login to codewars and them parse your nickname...'
     sleep(3)
@@ -44,10 +51,7 @@ class Parser
     @nickname = parser.username
   end
 
-  def solution_url
-    "https://www.codewars.com/users/#{@nickname}/completed_solutions"
-  end
-
+  # starting save process
   def choose_separate_save
     puts 'Start parsing solutions!'
     if @choice_save == 1
@@ -59,17 +63,7 @@ class Parser
     end
   end
 
-  def choice_how_save
-    puts "Choose how's save files"
-
-    puts '1) Save every solution to every file'
-    puts '2) Save all solutions to one file'
-
-    @choice_save = $stdin.gets.chomp.to_i
-
-    puts(@choice_save == 1 ? 'solutions to every file' : 'solutions to one file')
-  end
-
+  # finds languages and give choise for them
   def choice_language
     profile = Api::Profile.new(@nickname)
 
@@ -81,6 +75,7 @@ class Parser
     puts "okay, your choise is #{@language}"
   end
 
+  # checking for exists data and gets it if doesnt exists
   def request_login_pass
     puts 'Starting request data...'
 
@@ -95,10 +90,8 @@ class Parser
     end
   end
 
-  def start_browser
-    @browser = Watir::Browser.new :firefox, headless: true
-  end
-
+  # login to codewars
+  # takes username and password and trying to gain access to solutions
   def login
     puts 'login to codewars and them start parse, get some coffee if you have a lot of solutions'
     sleep(3)
@@ -113,8 +106,10 @@ class Parser
     @browser
   end
 
+  # parsing process
+  # redirect to solution page and saves all page
   def parse
-    @browser.goto(solution_url)
+    @browser.goto(SOLUTION_URL)
     browser = scroll_to_bottom_page(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)
@@ -126,6 +121,8 @@ class Parser
     self
   end
 
+  # return array with hashes
+  # hash-element is a solution which have name, kyu and solution
   def separate_data
     @data = @data.select {|item| item.at('code')['data-language'] == @language }
                  .map {|item|
@@ -139,6 +136,8 @@ class Parser
     self
   end
 
+  # create many files-solutions
+  # to separate folder
   def place_by_files
     FileUtils.mkdir_p(SOLUTION_PATH)
 
@@ -153,14 +152,16 @@ class Parser
     end
   end
 
+  # creates and writes all data to one file
   def place_to_one_file
     @data.each do |n|
       File.write(SOLUTION_FILE, "#{n[:solution_name]} #{n[:kyu]}\n", mode: 'a')
-
       File.write(SOLUTION_FILE, "#{n[:solution]}\n\n", mode: 'a')
     end
   end
 
+  # TODO: move to separate module
+  # utils method which scroll browser window down
   def scroll_to_bottom_page(browser)
     loop do
       link_number = browser.links.size
