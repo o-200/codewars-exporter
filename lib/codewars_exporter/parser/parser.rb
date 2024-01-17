@@ -13,12 +13,15 @@ class Parser
   SOLUTION_FILE = 'solution.txt'
   SOLUTION_PATH = "solutions/#{@language}"
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
+  SOLUTION_URL = "https://www.codewars.com/users/#{@nickname}/completed_solutions"
 
   attr_accessor :browser, :email, :password
 
   def initialize(email=nil, password=nil)
     @email = email
     @password = password
+
+    @browser = Watir::Browser.new :firefox, headless: true
   end
 
   # main method which takes parsing and saving process
@@ -46,11 +49,6 @@ class Parser
     parser = NicknameParser.new(@email, @password)
     parser.run
     @nickname = parser.username
-  end
-
-  # ??????????????? refactor
-  def solution_url
-    "https://www.codewars.com/users/#{@nickname}/completed_solutions"
   end
 
   # starting save process
@@ -92,10 +90,6 @@ class Parser
     end
   end
 
-  def start_browser
-    @browser = Watir::Browser.new :firefox, headless: true
-  end
-
   # login to codewars
   # takes username and password and trying to gain access to solutions
   def login
@@ -115,7 +109,7 @@ class Parser
   # parsing process
   # redirect to solution page and saves all page
   def parse
-    @browser.goto(solution_url)
+    @browser.goto(SOLUTION_URL)
     browser = scroll_to_bottom_page(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)
