@@ -7,6 +7,7 @@ require './lib/codewars_exporter/api/profile'
 require_relative 'utils/access_requester.rb'
 require_relative 'utils/constants.rb'
 require_relative 'utils/save_chooser.rb'
+require_relative 'utils/file_saver.rb'
 require_relative 'nickname_parser'
 
 ##
@@ -15,16 +16,17 @@ class Parser
   include Utils::AccessRequester
   include Utils::SaveChooser
   include Utils::Constants
+  include Utils::FileSaver
 
   DATA_FILE = '.data'
-  SOLUTION_FILE = 'solution.txt'
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
 
-  attr_accessor :browser, :email, :password
+  attr_accessor :browser, :email, :password, :choice
 
-  def initialize(email=nil, password=nil)
+  def initialize(email=nil, password=nil, choice = nil)
     @email = email
     @password = password
+    @choice = choice
 
     @browser = Watir::Browser.new :firefox, headless: true
   end
@@ -38,7 +40,7 @@ class Parser
     choice_how_save
 
     login
-    save_solutions
+    start_save_solutions(@choice, @language)
 
     puts 'Work completed! Closing browser...'
     @browser.close
@@ -53,25 +55,21 @@ class Parser
     request_data(@email, @password)
   end
 
-  # searching of username in codewars
+  # +NicknameParser+
+  # parser username of codewars account
   def find_nick
     parser = NicknameParser.new(@email, @password)
     parser.run
     @nickname = parser.username
   end
 
+  # +Utils::SaveChooser+
+  # checking how we need to save files, asking user about that
   def choice_how_save
-    @choice = choose_save_method
-  end
-
-  def save_solutions
-    puts 'Start parsing solutions!'
-    if @choice == 1
-      parse.separate_data.place_by_files
-      puts "#{solution_path(@language)} was created! closing program..."
+    if @choice.nil?
+      @choice = choose_save_method
     else
-      parse.separate_data.place_to_one_file
-      puts "'#{SOLUTION_FILE}' was created! closing program..."
+      puts "we already known how save files, skipping..."
     end
   end
 
@@ -116,45 +114,6 @@ class Parser
     self
   end
 
-  # return array with hashes
-  # hash-element is a solution which have name, kyu and solution
-  def separate_data
-    @data = @data.select {|item| item.at('code')['data-language'] == @language }
-                 .map {|item|
-      {
-        solution_name: item.at_css('a').text,
-        kyu:           item.at_css('.inner-small-hex').text,
-        solution:      item.at_css('pre').text
-      }
-    }
-
-    self
-  end
-
-  # create many files-solutions
-  # to separate folder
-  def place_by_files
-    FileUtils.mkdir_p(solution_path(@language))
-
-    @data.each do |n|
-      name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
-
-      File.open(File.join(solution_path(@language), name_kyu), 'w') do |file|
-        file.write(n[:solution])
-      end
-
-      puts name_kyu
-    end
-  end
-
-  # creates and writes all data to one file
-  def place_to_one_file
-    @data.each do |n|
-      File.write(SOLUTION_FILE, "#{n[:solution_name]} #{n[:kyu]}\n", mode: 'a')
-      File.write(SOLUTION_FILE, "#{n[:solution]}\n\n", mode: 'a')
-    end
-  end
-
   # TODO: move to separate module
   # utils method which scroll browser window down
   def scroll_to_bottom_page(browser)
@@ -165,10 +124,6 @@ class Parser
 
       return browser if browser.links.size == link_number
     end
-  end
-
-  def solution_path(language)
-    "solutions/#{language}"
   end
 
   def solution_url(nickname)

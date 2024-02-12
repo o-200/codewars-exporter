@@ -43,8 +43,15 @@ bin/api <email> <password>
 #### 3. If you want to parse your solutions just use:
 
 ```ruby
-bin/parser <email> <password>
+bin/parser <email> <password> <choice_method>
 ```
+
+### Choice methods
+
+1. Save every solution to every file
+2. Save all solutions to one file
+
+Anyway all params can be blank and you will need put them later
 
 # Contribution
 
