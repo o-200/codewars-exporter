@@ -8,6 +8,7 @@ require_relative 'utils/access_requester.rb'
 require_relative 'utils/constants.rb'
 require_relative 'utils/save_chooser.rb'
 require_relative 'utils/file_saver.rb'
+require_relative 'utils/down_scroller.rb'
 require_relative 'nickname_parser'
 
 ##
@@ -17,6 +18,7 @@ class Parser
   include Utils::SaveChooser
   include Utils::Constants
   include Utils::FileSaver
+  include Utils::DownScroller
 
   DATA_FILE = '.data'
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
@@ -101,6 +103,9 @@ class Parser
 
   # parsing process
   # redirect to solution page and saves all page
+  #
+  # +Utils::DownScroller+
+  # it have method 'scroll_to_bottom_page' which scrolls our browser for parsing all solutions
   def parse
     @browser.goto(solution_url(@nickname))
     browser = scroll_to_bottom_page(@browser)
@@ -112,18 +117,6 @@ class Parser
     @browser.close
 
     self
-  end
-
-  # TODO: move to separate module
-  # utils method which scroll browser window down
-  def scroll_to_bottom_page(browser)
-    loop do
-      link_number = browser.links.size
-      browser.scroll.to :bottom
-      sleep(2)
-
-      return browser if browser.links.size == link_number
-    end
   end
 
   def solution_url(nickname)
