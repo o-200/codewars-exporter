@@ -3,22 +3,17 @@
 require 'watir'
 require 'nokogiri'
 require 'fileutils'
+
 require './lib/codewars_exporter/api/profile'
-require_relative 'utils/access_requester.rb'
-require_relative 'utils/constants.rb'
-require_relative 'utils/save_chooser.rb'
-require_relative 'utils/file_saver.rb'
-require_relative 'utils/down_scroller.rb'
-require_relative 'nickname_parser'
+require_relative 'utils/utils.rb'
 
 ##
 # This class is a parser which getting and represents solutions
 class Parser
   include Utils::AccessRequester
-  include Utils::SaveChooser
   include Utils::Constants
   include Utils::FileSaver
-  include Utils::DownScroller
+  include Utils::HowSaveChooser
 
   DATA_FILE = '.data'
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
@@ -42,7 +37,7 @@ class Parser
     choice_how_save
 
     login
-    start_save_solutions(@choice, @language)
+    save_solutions
 
     puts 'Work completed! Closing browser...'
     @browser.close
@@ -57,12 +52,25 @@ class Parser
     request_data(@email, @password)
   end
 
-  # +NicknameParser+
+  # +Utils::NicknameParser+ - class
   # parser username of codewars account
   def find_nick
-    parser = NicknameParser.new(@email, @password)
+    parser = Utils::NicknameParser.new(@email, @password)
     parser.run
     @nickname = parser.username
+  end
+
+  # +Api::Profile+
+  # finds languages and give list to choice of them
+  def choice_language
+    profile = Api::Profile.new(@nickname)
+
+    puts 'choose the language which need to parse?'
+    puts "I am detected these languages: #{profile.languages.join(', ')}"
+
+    @language = $stdin.gets.chomp.to_s.downcase
+
+    puts "okay, your choise is #{@language}"
   end
 
   # +Utils::SaveChooser+
@@ -73,18 +81,6 @@ class Parser
     else
       puts "we already known how save files, skipping..."
     end
-  end
-
-  # finds languages and give choise for them
-  def choice_language
-    profile = Api::Profile.new(@nickname)
-
-    puts 'choose the language which need to parse?'
-    puts "I am detected these languages: #{profile.languages.join(', ')}"
-
-    @language = $stdin.gets.chomp.to_s.downcase
-
-    puts "okay, your choise is #{@language}"
   end
 
   # login to codewars
@@ -101,22 +97,8 @@ class Parser
     @browser
   end
 
-  # parsing process
-  # redirect to solution page and saves all page
-  #
-  # +Utils::DownScroller+
-  # it have method 'scroll_to_bottom_page' which scrolls our browser for parsing all solutions
-  def parse
-    @browser.goto(solution_url(@nickname))
-    browser = scroll_to_bottom_page(@browser)
-
-    doc = Nokogiri::HTML.parse(browser.html)
-    @data = doc.css('.list-item-solutions')
-
-    puts 'parsing complete!'
-    @browser.close
-
-    self
+  def save_solutions
+    start_save_solutions(@choice, @language)
   end
 
   def solution_url(nickname)

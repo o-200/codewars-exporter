@@ -1,5 +1,5 @@
 module Utils
-  module SaveChooser
+  module HowSaveChooser
     def choose_save_method(choice)
       if choice.nil?
         puts "Choose how's save files"

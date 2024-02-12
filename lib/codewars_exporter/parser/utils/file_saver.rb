@@ -14,6 +14,19 @@ module Utils
       end
     end
 
+    def parse
+      @browser.goto(solution_url(@nickname))
+      browser = scroll_to_bottom_page(@browser)
+
+      doc = Nokogiri::HTML.parse(browser.html)
+      @data = doc.css('.list-item-solutions')
+
+      puts 'parsing complete!'
+      @browser.close
+
+      self
+    end
+
     # return array with hashes
     # hash-element is a solution which have name, kyu and solution
     def separate_data(language)
@@ -55,6 +68,16 @@ module Utils
 
     def solution_path(language)
       "solutions/#{language}"
+    end
+
+    def scroll_to_bottom_page(browser)
+      loop do
+        link_number = browser.links.size
+        browser.scroll.to :bottom
+        sleep(1)
+
+        return browser if browser.links.size == link_number
+      end
     end
   end
 end
