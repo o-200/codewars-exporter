@@ -5,12 +5,14 @@ require 'nokogiri'
 require 'fileutils'
 require './lib/codewars_exporter/api/profile'
 require_relative 'utils/access_requester.rb'
+require_relative 'utils/constants.rb'
 require_relative 'nickname_parser'
 
 ##
 # This class is a parser which getting and represents solutions
 class Parser
   include Utils::AccessRequester
+  include Utils::Constants
 
   DATA_FILE = '.data'
   SOLUTION_FILE = 'solution.txt'
@@ -43,7 +45,8 @@ class Parser
   protected
 
   # +Utils::AccessRequester+
-  # checking for access data and renew instance variables for getting actual data
+  # checking for access data and renew instance variables
+  # for getting actual data if user forgot put them
   def request_login_pass
     request_data(@email, @password)
   end
