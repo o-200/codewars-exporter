@@ -36,7 +36,6 @@ class Parser
     choice_language
     choice_how_save
 
-    login
     save_solutions
 
     puts 'Work completed! Closing browser...'
@@ -80,20 +79,6 @@ class Parser
     else
       puts "we already known how save files, skipping..."
     end
-  end
-
-  # login to codewars
-  # takes username and password and trying to gain access to solutions
-  def login
-    puts 'login to codewars and them start parse, get some coffee if you have a lot of solutions'
-    sleep(3)
-
-    @browser.goto(LOGIN_URL)
-    @browser.text_field(id: 'user_email').set(email)
-    @browser.text_field(id: 'user_password').set(password)
-    @browser.button(type: 'submit').click
-
-    @browser
   end
 
   def save_solutions

@@ -1,8 +1,10 @@
 module Utils
   module FileSaver
     SOLUTION_FILE = 'solution.txt'
+    LOGIN_URL = 'https://www.codewars.com/users/sign_in'
 
     def start_save_solutions(choice, language)
+      login
       puts 'Start parsing solutions!'
 
       if choice == 1
@@ -12,6 +14,20 @@ module Utils
         parse.separate_data(language).place_to_one_file
         puts "'#{SOLUTION_FILE}' was created! closing program..."
       end
+    end
+
+    # login to codewars
+    # takes username and password and trying to gain access to solutions
+    def login
+      puts 'login to codewars and them start parse, get some coffee if you have a lot of solutions'
+      sleep(3)
+
+      @browser.goto(LOGIN_URL)
+      @browser.text_field(id: 'user_email').set(email)
+      @browser.text_field(id: 'user_password').set(password)
+      @browser.button(type: 'submit').click
+
+      @browser
     end
 
     def parse
@@ -31,7 +47,7 @@ module Utils
     # hash-element is a solution which have name, kyu and solution
     def separate_data(language)
       @data = @data.select {|item| item.at('code')['data-language'] == language }
-                  .map {|item|
+                  .map { |item|
         {
           solution_name: item.at_css('a').text,
           kyu:           item.at_css('.inner-small-hex').text,
