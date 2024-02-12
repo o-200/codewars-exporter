@@ -4,11 +4,14 @@ require 'watir'
 require 'nokogiri'
 require 'fileutils'
 require './lib/codewars_exporter/api/profile'
+require_relative 'utils/access_requester.rb'
 require_relative 'nickname_parser'
 
 ##
 # This class is a parser which getting and represents solutions
 class Parser
+  include Utils::AccessRequester
+
   DATA_FILE = '.data'
   SOLUTION_FILE = 'solution.txt'
   LOGIN_URL = 'https://www.codewars.com/users/sign_in'
@@ -38,6 +41,12 @@ class Parser
   end
 
   protected
+
+  # +Utils::AccessRequester+
+  # checking for access data and renew instance variables for getting actual data
+  def request_login_pass
+    request_data(@email, @password)
+  end
 
   # searching of username in codewars
   def find_nick
@@ -82,21 +91,6 @@ class Parser
     @language = $stdin.gets.chomp.to_s.downcase
 
     puts "okay, your choise is #{@language}"
-  end
-
-  # checking for exists data and gets it if doesnt exists
-  def request_login_pass
-    puts 'Starting request data...'
-
-    if email.nil? || password.nil?
-      puts 'Enter your email:'
-      @email = gets.chomp
-
-      puts 'Enter your password:'
-      @password = gets.chomp
-    else
-      puts 'We already have data, skipping stage'
-    end
   end
 
   # login to codewars
