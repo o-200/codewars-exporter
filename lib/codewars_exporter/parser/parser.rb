@@ -6,12 +6,14 @@ require 'fileutils'
 require './lib/codewars_exporter/api/profile'
 require_relative 'utils/access_requester.rb'
 require_relative 'utils/constants.rb'
+require_relative 'utils/save_chooser.rb'
 require_relative 'nickname_parser'
 
 ##
 # This class is a parser which getting and represents solutions
 class Parser
   include Utils::AccessRequester
+  include Utils::SaveChooser
   include Utils::Constants
 
   DATA_FILE = '.data'
@@ -32,11 +34,11 @@ class Parser
     request_login_pass
     find_nick
 
-    choice_how_save
     choice_language
+    choice_how_save
 
     login
-    choose_separate_save
+    save_solutions
 
     puts 'Work completed! Closing browser...'
     @browser.close
@@ -53,29 +55,18 @@ class Parser
 
   # searching of username in codewars
   def find_nick
-    puts 'login to codewars and them parse your nickname...'
-    sleep(3)
-
     parser = NicknameParser.new(@email, @password)
     parser.run
     @nickname = parser.username
   end
 
   def choice_how_save
-    puts "Choose how's save files"
-
-    puts '1) Save every solution to every file'
-    puts '2) Save all solutions to one file'
-
-    @choice_save = $stdin.gets.chomp.to_i
-
-    puts(@choice_save == 1 ? 'solutions to every file' : 'solutions to one file')
+    @choice = choose_save_method
   end
 
-  # starting save process
-  def choose_separate_save
+  def save_solutions
     puts 'Start parsing solutions!'
-    if @choice_save == 1
+    if @choice == 1
       parse.separate_data.place_by_files
       puts "#{solution_path(@language)} was created! closing program..."
     else

@@ -17,6 +17,7 @@ class NicknameParser
   end
 
   def run
+    puts 'login to codewars and them parse your nickname...'
     login
     parse
 
