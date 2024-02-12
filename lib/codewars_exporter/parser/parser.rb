@@ -65,7 +65,7 @@ class Parser
     puts 'Start parsing solutions!'
     if @choice_save == 1
       parse.separate_data.place_by_files
-      puts "#{solution_path} was created! closing program..."
+      puts "#{solution_path(@language)} was created! closing program..."
     else
       parse.separate_data.place_to_one_file
       puts "'#{SOLUTION_FILE}' was created! closing program..."
@@ -116,7 +116,7 @@ class Parser
   # parsing process
   # redirect to solution page and saves all page
   def parse
-    @browser.goto(solution_url)
+    @browser.goto(solution_url(@nickname))
     browser = scroll_to_bottom_page(@browser)
 
     doc = Nokogiri::HTML.parse(browser.html)
@@ -146,12 +146,12 @@ class Parser
   # create many files-solutions
   # to separate folder
   def place_by_files
-    FileUtils.mkdir_p(solution_path)
+    FileUtils.mkdir_p(solution_path(@language))
 
     @data.each do |n|
       name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
 
-      File.open(File.join(solution_path, name_kyu), 'w') do |file|
+      File.open(File.join(solution_path(@language), name_kyu), 'w') do |file|
         file.write(n[:solution])
       end
 
@@ -179,11 +179,11 @@ class Parser
     end
   end
 
-  def solution_path
-    "solutions/#{@language}"
+  def solution_path(language)
+    "solutions/#{language}"
   end
 
-  def solution_url
-    "https://www.codewars.com/users/#{@nickname}/completed_solutions"
+  def solution_url(nickname)
+    "https://www.codewars.com/users/#{nickname}/completed_solutions"
   end
 end
