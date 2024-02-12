@@ -4,7 +4,8 @@
 
 codewars-exporter is a prototype application which parse solutions from [codewars.com](https://www.codewars.com/dashboard) to local file. You can optionally choose languages and save methods.
 
-# api 
+# api
+
 https://dev.codewars.com/
 
 # Functionality
@@ -19,24 +20,28 @@ https://dev.codewars.com/
 1. Pretty good if you have installed ruby <3
 2. Email and password from codewars (any other methods to login like Oauth doesnt worked)
 
-
 # Usage
 
 #### 0. You have to install web-driver for your browser (we are using chrome by default)
+
 ```
 http://watir.com/guides/drivers/
 ```
+
 #### 1. Setup application:
+
 ```ruby
 bundle install
 ```
 
 #### 2. For using codewars-api (general information) functionality you should use:
+
 ```ruby
 bin/api <email> <password>
 ```
 
 #### 3. If you want to parse your solutions just use:
+
 ```ruby
 bin/parser <email> <password>
 ```
