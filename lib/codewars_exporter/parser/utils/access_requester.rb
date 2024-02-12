@@ -9,8 +9,6 @@ module Utils
       get_password if password.nil?
     end
 
-    private
-
     def get_email
       puts 'Enter your email:'
       self.email = gets.chomp

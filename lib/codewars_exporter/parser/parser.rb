@@ -5,7 +5,7 @@ require 'nokogiri'
 require 'fileutils'
 
 require './lib/codewars_exporter/api/profile'
-require_relative 'utils/utils.rb'
+require_relative 'utils.rb'
 
 ##
 # This class is a parser which getting and represents solutions
@@ -56,7 +56,6 @@ class Parser
   # parser username of codewars account
   def find_nick
     parser = Utils::NicknameParser.new(@email, @password)
-    parser.run
     @nickname = parser.username
   end
 

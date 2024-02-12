@@ -15,6 +15,8 @@ module Utils
       @browser = Watir::Browser.new :firefox, headless: true
       @email = email
       @password = password
+
+      run
     end
 
     def run
@@ -23,8 +25,6 @@ module Utils
 
       @browser.close
     end
-
-    private
 
     def login
       puts 'login to codewars and them parse your nickname...'
