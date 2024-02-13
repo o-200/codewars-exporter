@@ -43,7 +43,7 @@ bin/api <email> <password>
 #### 3. If you want to parse your solutions just use:
 
 ```ruby
-bin/parser <email> <password> <choice_method>
+bin/parser <email> <password> <choice_method> <language>
 ```
 
 ### Choice methods
