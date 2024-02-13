@@ -1,6 +1,8 @@
 module Utils
-  module HowSaveChooser
-    def choose_save_method(choice)
+  class HowSaveChooser
+    attr_reader :choice
+
+    def initialize(choice: nil)
       if choice.nil?
         puts "Choose how's save files"
 
@@ -10,9 +12,9 @@ module Utils
         choice = $stdin.gets.chomp.to_i
       else
         puts(choice == 1 ? 'solutions to every file' : 'solutions to one file')
-
-        choice
       end
+
+      @choice = choice
     end
   end
 end

@@ -1,7 +1,6 @@
 module Utils
   class FileSaver
-    SOLUTION_FILE = 'solution.txt'
-    LOGIN_URL = 'https://www.codewars.com/users/sign_in'
+    include Utils::Constants
 
     def initialize(login, email, password, language, choice)
       @login = login

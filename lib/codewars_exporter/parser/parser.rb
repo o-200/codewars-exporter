@@ -11,10 +11,6 @@ require_relative 'utils.rb'
 # This class is a parser which getting and represents solutions
 class Parser
   include Utils::Constants
-  include Utils::HowSaveChooser
-
-  DATA_FILE = '.data'
-  LOGIN_URL = 'https://www.codewars.com/users/sign_in'
 
   attr_accessor :browser, :email, :password, :choice
 
@@ -69,16 +65,18 @@ class Parser
     puts "okay, your choise is #{@language}"
   end
 
-  # +Utils::SaveChooser+
+  # +Utils::HowSaveChooser+
   # checking how we need to save files, asking user about that
   def choice_how_save
     if @choice.nil?
-      @choice = choose_save_method
+      @choice = Utils::HowSaveChooser.new.choice
     else
       puts "we already known how save files, skipping..."
     end
   end
 
+  # +Utils::FileSaver+
+  # start scenario of saving to files
   def save_solutions
     Utils::FileSaver.new(@nickname, @email, @password, @language, @choice)
   end
