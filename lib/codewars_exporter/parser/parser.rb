@@ -12,12 +12,13 @@ require_relative 'utils.rb'
 class Parser
   include Utils::Constants
 
-  attr_accessor :browser, :email, :password, :choice
+  attr_accessor :browser, :email, :password, :choice, :language
 
-  def initialize(email=nil, password=nil, choice = nil)
+  def initialize(email=nil, password=nil, choice=nil, language=nil)
     @email = email
     @password = password
     @choice = choice
+    @language = language
 
     @browser = Watir::Browser.new :firefox, headless: true
   end
@@ -42,7 +43,9 @@ class Parser
   # checking for access data and renew instance variables
   # for getting actual data if user forgot put them
   def request_login_pass
-    @email, @password = Utils::AccessRequester.new(@email, @password)
+    if @email.nil? || @password.nil?
+      @email, @password = Utils::AccessRequester.new(@email, @password)
+    end
   end
 
   # +Utils::NicknameParser+ - class
@@ -59,8 +62,7 @@ class Parser
     puts 'choose the language which need to parse?'
     puts "I am detected these languages: #{profile.languages.join(', ')}"
 
-    @language = $stdin.gets.chomp.to_s.downcase
-
+    @language = $stdin.gets.chomp.to_s.downcase if @language.nil?
     puts "okay, your choise is #{@language}"
   end
 

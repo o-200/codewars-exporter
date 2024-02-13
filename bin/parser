@@ -3,5 +3,5 @@
 
 require './lib/codewars_exporter'
 
-parser = Parser.new(ARGV[0], ARGV[1], ARGV[2].to_i)
+parser = Parser.new(ARGV[0], ARGV[1], ARGV[2].to_i, ARGV[3])
 parser.run
