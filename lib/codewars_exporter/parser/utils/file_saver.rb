@@ -1,3 +1,6 @@
+require 'watir'
+require 'nokogiri'
+
 module Utils
   class FileSaver
     include Utils::Constants

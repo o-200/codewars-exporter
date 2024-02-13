@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'watir'
-require 'nokogiri'
 require 'fileutils'
 
 require './lib/codewars_exporter/api/profile'
@@ -12,15 +10,13 @@ require_relative 'utils.rb'
 class Parser
   include Utils::Constants
 
-  attr_accessor :browser, :email, :password, :choice, :language
+  attr_accessor :email, :password, :choice, :language
 
   def initialize(email=nil, password=nil, choice=nil, language=nil)
     @email = email
     @password = password
     @choice = choice
     @language = language
-
-    @browser = Watir::Browser.new :firefox, headless: true
   end
 
   # main method which takes parsing and saving process
@@ -34,7 +30,6 @@ class Parser
     save_solutions
 
     puts 'Work completed! Closing browser...'
-    @browser.close
   end
 
   protected
