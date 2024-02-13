@@ -48,8 +48,7 @@ class Parser
   # +Utils::NicknameParser+ - class
   # parser username of codewars account
   def find_nick
-    parser = Utils::NicknameParser.new(@email, @password)
-    @nickname = parser.username
+    @nickname = Utils::NicknameParser.new(@email, @password).username
   end
 
   # +Api::Profile+
