@@ -10,9 +10,7 @@ require_relative 'utils.rb'
 ##
 # This class is a parser which getting and represents solutions
 class Parser
-  include Utils::AccessRequester
   include Utils::Constants
-  include Utils::FileSaver
   include Utils::HowSaveChooser
 
   DATA_FILE = '.data'
@@ -48,7 +46,7 @@ class Parser
   # checking for access data and renew instance variables
   # for getting actual data if user forgot put them
   def request_login_pass
-    request_data(@email, @password)
+    @email, @password = Utils::AccessRequester.new(@email, @password)
   end
 
   # +Utils::NicknameParser+ - class
@@ -82,10 +80,6 @@ class Parser
   end
 
   def save_solutions
-    start_save_solutions(@choice, @language)
-  end
-
-  def solution_url(nickname)
-    "https://www.codewars.com/users/#{nickname}/completed_solutions"
+    Utils::FileSaver.new(@nickname, @email, @password, @language, @choice)
   end
 end

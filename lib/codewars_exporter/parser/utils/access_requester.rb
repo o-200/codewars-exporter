@@ -2,11 +2,14 @@ module Utils
   # +Utils::AccessRequester+
   # was created for delegating access logic and creating validations on email and pswd fields
   # TODO: make basic validations on fields
-  # TODO: make tests
-  module AccessRequester
-    def request_data(email = nil, password = nil)
-      get_email if email.nil?
-      get_password if password.nil?
+  class AccessRequester
+    attr_accessor :email, :password
+
+    def initialize(email: nil, password: nil)
+      @email = email || get_email
+      @password = password || get_password
+
+      [@email, @password]
     end
 
     def get_email
