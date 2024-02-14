@@ -12,6 +12,8 @@ module Utils
       [@email, @password]
     end
 
+    private
+
     def get_email
       puts 'Enter your email:'
       self.email = gets.chomp

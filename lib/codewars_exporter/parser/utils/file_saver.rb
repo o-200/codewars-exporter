@@ -29,6 +29,8 @@ module Utils
       end
     end
 
+    private
+
     # login to codewars
     # takes username and password and trying to gain access to solutions
     def login
