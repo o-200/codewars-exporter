@@ -2,7 +2,7 @@
 
 require 'fileutils'
 
-require './lib/codewars_exporter/api/profile'
+require './lib/codewars_exporter/api.rb'
 require_relative 'utils.rb'
 
 ##
@@ -32,7 +32,7 @@ class Parser
     puts 'Work completed! Closing browser...'
   end
 
-  protected
+  private
 
   # +Utils::AccessRequester+
   # checking for access data and renew instance variables
