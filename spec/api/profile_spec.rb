@@ -1,4 +1,3 @@
-# profile_spec.rb
 require './spec/spec_helper.rb'
 
 RSpec.describe Api::Profile do
