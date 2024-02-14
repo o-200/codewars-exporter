@@ -5,9 +5,9 @@ require 'json'
 
 module Api
   class Profile
-    def initialize(nickname, link = nil)
-      request = generate_link(nickname, link)
-      @json = json_request_parse(request)
+    def initialize(nickname)
+      @request = "https://www.codewars.com/api/v1/users/#{nickname}"
+      @json = json_request_parse
     end
 
     def full_data
@@ -40,18 +40,9 @@ module Api
 
     private
 
-    def generate_link(nickname, link = nil)
-      link ? link : "https://www.codewars.com/api/v1/users/#{nickname}"
-    end
-
-    def json_request_parse(request)
-      uri = URI(request)
-
-      response = begin
-                   Net::HTTP.get(uri)
-                 rescue Errno::ECONNREFUSED => e
-                   File.read(request)
-                 end
+    def json_request_parse
+      uri = URI(@request)
+      response = Net::HTTP.get(uri)
 
       JSON.parse(response)
     end

@@ -1,33 +1,68 @@
+# profile_spec.rb
 require './spec/spec_helper.rb'
 
 RSpec.describe Api::Profile do
+  # Mocking the HTTP request and response for testing
+  let(:nickname) { 'test_user' }
+  let(:json_response) { JSON.parse(File.read('spec/test_files/api/profile/o-200.json')) }
+
   before do
-    @test_file_path = './spec/test_files/api/profile/o-200.json'
-    @nick = 'o-200'
+    allow(Net::HTTP).to receive(:get).and_return(json_response.to_json)
   end
 
-  describe 'parse data' do
-    it 'will correct parse and return correct full_data' do
-      expect(Api::Profile.new('o-200', @test_file_path).full_data).to eq(["o-200", "python\nruby\njavascript", "5 kyu", 277, 270699, 49])
+  describe '#initialize' do
+    it 'creates an instance of Api::Profile' do
+      profile = Api::Profile.new(nickname)
+      expect(profile).to be_an_instance_of(Api::Profile)
     end
   end
 
-  describe '#generate_link' do
-    it 'sending link and should return link' do
-      test_class = Api::Profile.new(@nick)
-      expect(test_class.send(:generate_link, @nick, @test_file_path)).to eq(@test_file_path)
-    end
-
-    it 'dont sending link and should return constructed link' do
-      test_class = Api::Profile.new(@nick)
-      expect(test_class.send(:generate_link, @nick)).to eq("https://www.codewars.com/api/v1/users/#{@nick}")
+  describe '#full_data' do
+    it 'returns an array containing user data' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.full_data).to match_array(["o-200", "python\nruby\njavascript", "5 kyu", 277, 270699, 49])
     end
   end
 
-  describe '#json_request_parse' do
-    it 'should correct parse json' do
-      test_class = Api::Profile.new(@nick, @test_file_path)
-      expect(test_class.send(:json_request_parse, @test_file_path)).to eq(JSON.parse(File.read(@test_file_path)))
+  describe '#username' do
+    it 'returns the correct username' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.username).to eq('o-200')
+    end
+  end
+
+  describe '#honor' do
+    it 'returns the correct honor value' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.honor).to eq(277)
+    end
+  end
+
+  describe '#rank' do
+    it 'returns the correct rank' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.rank).to eq('5 kyu')
+    end
+  end
+
+  describe '#languages' do
+    it 'returns the list of languages' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.languages).to eq(['python', 'ruby', 'javascript'])
+    end
+  end
+
+  describe '#leaderboard' do
+    it 'returns the correct leaderboard position' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.leaderboard).to eq(270699)
+    end
+  end
+
+  describe '#total_completed' do
+    it 'returns the correct total completed challenges' do
+      profile = Api::Profile.new(nickname)
+      expect(profile.total_completed).to eq(49)
     end
   end
 end
