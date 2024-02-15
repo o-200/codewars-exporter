@@ -5,7 +5,7 @@ module Utils
   class AccessRequester
     attr_accessor :email, :password
 
-    def initialize(email: nil, password: nil)
+    def initialize(email = nil, password = nil)
       @email = email || get_email
       @password = password || get_password
 
@@ -16,12 +16,12 @@ module Utils
 
     def get_email
       puts 'Enter your email:'
-      self.email = gets.chomp
+      @email = gets.chomp
     end
 
     def get_password
       puts 'Enter your password:'
-      self.password = gets.chomp
+      @password = gets.chomp
     end
   end
 end
