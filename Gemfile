@@ -10,3 +10,5 @@ gem 'watir', '~> 7.2'
 gem 'webdrivers', '= 5.3.0'
 
 gem 'rubocop', require: false
+
+gem "rspec", "~> 3.13"

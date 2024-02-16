@@ -26,6 +26,8 @@ module Utils
       @browser.close
     end
 
+    private
+
     def login
       puts 'login to codewars and them parse your nickname...'
       @browser.goto(LOGIN_URL)

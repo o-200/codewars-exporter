@@ -15,15 +15,19 @@ module Api
     def create_table
       config_table
 
-      table << profile.full_data
+      @table << profile.full_data
+    end
+
+    def table
+      puts @table
     end
 
     private
 
     def config_table
-      table.style = {all_separators: true, alignment: :center}
-      table.title = 'Codewars'
-      table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
+      @table.style = {all_separators: true, alignment: :center}
+      @table.title = 'Codewars'
+      @table.headings = ['Username', 'Languages', 'rankname', 'score', 'Position', 'total completed']
     end
   end
 end
