@@ -64,11 +64,7 @@ class Parser
   # +Utils::HowSaveChooser+
   # checking how we need to save files, asking user about that
   def choice_how_save
-    if @choice.nil?
-      @choice = Utils::HowSaveChooser.new.choice
-    else
-      puts "we already known how save files, skipping..."
-    end
+    @choice = Utils::HowSaveChooser.new.choice
   end
 
   # +Utils::FileSaver+

@@ -14,7 +14,7 @@ module Utils
         puts(choice == 1 ? 'solutions to every file' : 'solutions to one file')
       end
 
-      @choice = choice
+      @choice = choice == 1 ? PlacerByFiles : PlacerToOneFile
     end
   end
 end
