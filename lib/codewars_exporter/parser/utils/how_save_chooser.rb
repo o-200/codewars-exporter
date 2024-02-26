@@ -2,7 +2,7 @@ module Utils
   class HowSaveChooser
     attr_reader :choice
 
-    def initialize(choice: nil)
+    def initialize(choice = nil)
       if choice.nil?
         puts "Choose how's save files"
 
@@ -10,11 +10,15 @@ module Utils
         puts '2) Save all solutions to one file'
 
         choice = $stdin.gets.chomp.to_i
-      else
-        puts(choice == 1 ? 'solutions to every file' : 'solutions to one file')
       end
 
-      @choice = choice == 1 ? PlacerByFiles : PlacerToOneFile
+      if choice.to_i == 1
+        @choice = PlacerByFiles
+        puts 'solutions to every file'
+      else
+        @choice = PlacerToOneFile
+        puts 'solutions to one file'
+      end
     end
   end
 end
