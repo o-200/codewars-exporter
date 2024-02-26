@@ -1,2 +1,4 @@
-require_relative './parser/parser.rb'
-require_relative './parser/utils.rb'
+# frozen_string_literal: true
+
+require_relative './parser/parser'
+require_relative './parser/utils'

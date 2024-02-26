@@ -1,4 +1,6 @@
-require './spec/spec_helper.rb'
+# frozen_string_literal: true
+
+require './spec/spec_helper'
 
 RSpec.describe Api::Table do
   let(:nickname) { 'test_user' }

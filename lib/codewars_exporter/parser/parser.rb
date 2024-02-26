@@ -2,8 +2,8 @@
 
 require 'fileutils'
 
-require './lib/codewars_exporter/api.rb'
-require_relative 'utils.rb'
+require './lib/codewars_exporter/api'
+require_relative 'utils'
 
 ##
 # This class is a parser which getting and represents solutions
@@ -38,9 +38,9 @@ class Parser
   # checking for access data and renew instance variables
   # for getting actual data if user forgot put them
   def request_login_pass
-    if @email.nil? || @password.nil?
-      @email, @password = Utils::AccessRequester.new(@email, @password)
-    end
+    return unless @email.nil? || @password.nil?
+
+    @email, @password = Utils::AccessRequester.new(@email, @password)
   end
 
   # +Utils::NicknameParser+ - class

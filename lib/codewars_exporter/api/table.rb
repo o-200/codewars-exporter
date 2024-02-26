@@ -5,7 +5,7 @@ require 'terminal-table'
 
 module Api
   class Table
-    attr_reader :table, :profile
+    attr_reader :profile
 
     def initialize(nickname)
       @table = Terminal::Table.new
@@ -20,6 +20,7 @@ module Api
 
     def table
       puts @table
+      @table
     end
 
     private

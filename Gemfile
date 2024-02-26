@@ -11,4 +11,4 @@ gem 'webdrivers', '= 5.3.0'
 
 gem 'rubocop', require: false
 
-gem "rspec", "~> 3.13"
+gem 'rspec', '~> 3.13'

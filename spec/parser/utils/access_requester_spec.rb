@@ -1,4 +1,6 @@
-require './spec/spec_helper.rb'
+# frozen_string_literal: true
+
+require './spec/spec_helper'
 
 RSpec.describe Utils::AccessRequester do
   before do
@@ -10,8 +12,8 @@ RSpec.describe Utils::AccessRequester do
     it 'sets the email and password' do
       requester = Utils::AccessRequester.new(@email, @password)
 
-      expect(requester.email).to eq("test@example.com")
-      expect(requester.password).to eq("password")
+      expect(requester.email).to eq('test@example.com')
+      expect(requester.password).to eq('password')
     end
   end
 
@@ -19,10 +21,10 @@ RSpec.describe Utils::AccessRequester do
     it 'without all' do
       allow_any_instance_of(Utils::AccessRequester).to receive(:gets).and_return("test@example.com\n", "password\n")
 
-      requester = Utils::AccessRequester.new()
+      requester = Utils::AccessRequester.new
 
-      expect(requester.email).to eq("test@example.com")
-      expect(requester.password).to eq("password")
+      expect(requester.email).to eq('test@example.com')
+      expect(requester.password).to eq('password')
     end
 
     it 'with email, without password' do
@@ -30,8 +32,8 @@ RSpec.describe Utils::AccessRequester do
 
       requester = Utils::AccessRequester.new(@email)
 
-      expect(requester.email).to eq("test@example.com")
-      expect(requester.password).to eq("password")
+      expect(requester.email).to eq('test@example.com')
+      expect(requester.password).to eq('password')
     end
 
     # wtf
@@ -40,8 +42,8 @@ RSpec.describe Utils::AccessRequester do
 
       requester = Utils::AccessRequester.new(nil, @password)
 
-      expect(requester.email).to eq("test@example.com")
-      expect(requester.password).to eq("password")
+      expect(requester.email).to eq('test@example.com')
+      expect(requester.password).to eq('password')
     end
   end
 end

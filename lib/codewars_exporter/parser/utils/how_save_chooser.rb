@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Utils
   class HowSaveChooser
     attr_reader :choice
 
-    def initialize(choice = nil)
+    def initialize(choice=nil)
       if choice.nil?
         puts "Choose how's save files"
 

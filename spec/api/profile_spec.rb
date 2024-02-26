@@ -1,4 +1,6 @@
-require './spec/spec_helper.rb'
+# frozen_string_literal: true
+
+require './spec/spec_helper'
 
 RSpec.describe Api::Profile do
   # Mocking the HTTP request and response for testing
@@ -19,7 +21,7 @@ RSpec.describe Api::Profile do
   describe '#full_data' do
     it 'returns an array containing user data' do
       profile = Api::Profile.new(nickname)
-      expect(profile.full_data).to match_array(["o-200", "python\nruby\njavascript", "5 kyu", 277, 270699, 49])
+      expect(profile.full_data).to match_array(['o-200', "python\nruby\njavascript", '5 kyu', 277, 270_699, 49])
     end
   end
 
@@ -47,14 +49,14 @@ RSpec.describe Api::Profile do
   describe '#languages' do
     it 'returns the list of languages' do
       profile = Api::Profile.new(nickname)
-      expect(profile.languages).to eq(['python', 'ruby', 'javascript'])
+      expect(profile.languages).to eq(%w[python ruby javascript])
     end
   end
 
   describe '#leaderboard' do
     it 'returns the correct leaderboard position' do
       profile = Api::Profile.new(nickname)
-      expect(profile.leaderboard).to eq(270699)
+      expect(profile.leaderboard).to eq(270_699)
     end
   end
 

@@ -17,7 +17,8 @@ module Utils
     # @param email [String] The email address associated with the Codewars account.
     # @param password [String] The password for the Codewars account.
     # @param language [String] The programming language of solutions to be parsed.
-    # @param choice_class [Class] The user's choice for saving solutions (returns class of which save method), Template Method pattern
+    # @param choice_class [Class] The user's choice for saving solutions (returns class of which save method),
+    #   Template Method pattern
     def initialize(login, email, password, language, choice_class)
       @login = login
       @email = email
@@ -38,7 +39,6 @@ module Utils
       @choice_class.new(@data).save
       puts 'completed.'
     end
-
 
     # Logs into Codewars using the provided credentials.
     #
@@ -76,14 +76,14 @@ module Utils
     #
     # @return [Utils::FileSaver] The current instance of FileSaver.
     def separate_data
-      @data = @data.select { |item| item.at('code')['data-language'] == @language }
-                  .map { |item|
-                    {
-                      solution_name: item.at_css('a').text,
-                      kyu:           item.at_css('.inner-small-hex').text,
-                      solution:      item.at_css('pre').text
-                    }
-                  }
+      @data = @data.select {|item| item.at('code')['data-language'] == @language }
+                   .map {|item|
+        {
+          solution_name: item.at_css('a').text,
+          kyu:           item.at_css('.inner-small-hex').text,
+          solution:      item.at_css('pre').text
+        }
+      }
 
       self
     end

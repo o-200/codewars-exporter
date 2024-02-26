@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Utils
   # +Utils::AccessRequester+
   # was created for delegating access logic and creating validations on email and pswd fields
@@ -5,21 +7,22 @@ module Utils
   class AccessRequester
     attr_accessor :email, :password
 
-    def initialize(email = nil, password = nil)
-      @email = email || get_email
-      @password = password || get_password
+    def initialize(email=nil, password=nil)
+      @email = email || set_email
+      @password = password || set_password
 
+      # TODO: change that. void context.
       [@email, @password]
     end
 
     private
 
-    def get_email
+    def set_email
       puts 'Enter your email:'
       @email = gets.chomp
     end
 
-    def get_password
+    def set_password
       puts 'Enter your password:'
       @password = gets.chomp
     end

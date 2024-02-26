@@ -21,13 +21,19 @@ Layout/SpaceAroundEqualsInParameterDefault:
 # when introducing an interpolation. Use single quotes only if their semantics
 # are needed.
 # Style/StringLiterals:
- #  EnforcedStyle: double_quotes
+#  EnforcedStyle: double_quotes
 
 # We do not need to support Ruby 1.9, so this is good to use.
 Style/SymbolArray:
   Enabled: true
 
 Style/Next:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Metrics/ParameterLists:
   Enabled: false
 
 # Most readable form.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PlacerByFiles
   def initialize(data)
     @data = data
