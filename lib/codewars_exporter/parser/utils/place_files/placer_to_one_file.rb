@@ -9,8 +9,12 @@ class PlacerToOneFile
 
   def save
     @data.each do |n|
-      File.write(SOLUTION_FILE, "#{n[:solution_name]} #{n[:kyu]}\n", mode: 'a')
+      name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
+
+      File.write(SOLUTION_FILE, "#{name_kyu}\n", mode: 'a')
       File.write(SOLUTION_FILE, "#{n[:solution]}\n\n", mode: 'a')
+
+      puts "#{name_kyu} was saved!"
     end
   end
 end

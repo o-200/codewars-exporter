@@ -30,6 +30,9 @@ class Parser
     save_solutions
 
     puts 'Work completed! Closing browser...'
+
+    sleep 5
+    system('clear')
   end
 
   private
@@ -55,9 +58,10 @@ class Parser
     profile = Api::Profile.new(@nickname)
 
     puts 'choose the language which need to parse?'
-    puts "I am detected these languages: #{profile.languages.join(', ')}"
+    puts "I am detected these languages: [#{profile.languages.join(', ')}]"
 
     @language = $stdin.gets.chomp.to_s.downcase if @language.nil?
+    system('clear')
     puts "okay, your choise is #{@language}"
   end
 

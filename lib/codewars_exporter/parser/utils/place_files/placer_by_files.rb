@@ -15,7 +15,7 @@ class PlacerByFiles
         file.write(n[:solution])
       end
 
-      puts name_kyu
+      puts "#{name_kyu} was saved!"
     end
   end
 

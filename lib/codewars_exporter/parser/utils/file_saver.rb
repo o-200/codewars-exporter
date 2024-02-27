@@ -37,7 +37,7 @@ module Utils
 
       parse.separate_data
       @choice_class.new(@data).save
-      puts 'completed.'
+      puts 'Program was completed...'
     end
 
     # Logs into Codewars using the provided credentials.
@@ -52,7 +52,7 @@ module Utils
       @browser.text_field(id: 'user_password').set(@password)
       @browser.button(type: 'submit').click
 
-      puts 'Logged in successfully.'
+      puts 'Logged up successfully.'
       @browser
     end
 
@@ -66,7 +66,7 @@ module Utils
       doc = Nokogiri::HTML.parse(scrolled_browser.html)
       @data = doc.css('.list-item-solutions')
 
-      puts 'Parsing complete!'
+      puts 'Parse method was success!'
       @browser.close
 
       self
@@ -86,29 +86,6 @@ module Utils
       }
 
       self
-    end
-
-    # Creates individual files for each solution in a separate folder.
-    def place_by_files
-      FileUtils.mkdir_p(solution_path)
-
-      @data.each do |n|
-        name_kyu = "#{n[:solution_name]} #{n[:kyu]}"
-
-        File.open(File.join(solution_path, name_kyu), 'w') do |file|
-          file.write(n[:solution])
-        end
-
-        puts name_kyu
-      end
-    end
-
-    # Creates and writes all data to one file.
-    def place_to_one_file
-      @data.each do |n|
-        File.write(SOLUTION_FILE, "#{n[:solution_name]} #{n[:kyu]}\n", mode: 'a')
-        File.write(SOLUTION_FILE, "#{n[:solution]}\n\n", mode: 'a')
-      end
     end
 
     # Generates the path for the solution files based on the selected programming language.

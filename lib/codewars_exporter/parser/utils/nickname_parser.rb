@@ -44,7 +44,7 @@ module Utils
       doc = doc.css('.user_username')
       @username = doc.at_css('input#user_username')['value']
 
-      puts "parsing complete! your nickname is #{@username}"
+      puts "We're get your nickname, #{@username}"
     end
   end
 end

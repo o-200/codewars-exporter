@@ -12,15 +12,14 @@ module Utils
         puts '2) Save all solutions to one file'
 
         choice = $stdin.gets.chomp.to_i
+        system('clear')
       end
 
-      if choice.to_i == 1
-        @choice = PlacerByFiles
-        puts 'solutions to every file'
-      else
-        @choice = PlacerToOneFile
-        puts 'solutions to one file'
-      end
+      @choice = if choice.to_i == 1
+                  PlacerByFiles
+                else
+                  PlacerToOneFile
+                end
     end
   end
 end
