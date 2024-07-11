@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'utils/language_fetcher'
+require_relative 'utils'
 
 require 'net/http'
 require 'json'

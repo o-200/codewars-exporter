@@ -2,3 +2,4 @@
 
 require_relative './api/profile'
 require_relative './api/table'
+require_relative './api/utils'
