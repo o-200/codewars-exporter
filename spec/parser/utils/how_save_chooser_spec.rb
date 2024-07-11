@@ -6,8 +6,8 @@ RSpec.describe Utils::HowSaveChooser do
   describe '#initialize' do
     context 'when choice is provided' do
       it 'sets the choice attribute' do
-        chooser = Utils::HowSaveChooser.new(choice: 1)
-        expect(chooser.choice).to eq(1)
+        chooser = Utils::HowSaveChooser.new(1)
+        expect(chooser.choice).to eq(PlacerByFiles)
       end
     end
 
@@ -28,7 +28,7 @@ RSpec.describe Utils::HowSaveChooser do
 
         chooser = Utils::HowSaveChooser.new
 
-        expect(chooser.choice).to eq(1)
+        expect(chooser.choice).to eq(PlacerByFiles)
       end
     end
   end
