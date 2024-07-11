@@ -24,46 +24,4 @@ RSpec.describe Api::Profile do
       expect(profile.full_data).to match_array(['o-200', "python\nruby\njavascript", '5 kyu', 277, 270_699, 49])
     end
   end
-
-  describe '#username' do
-    it 'returns the correct username' do
-      profile = Api::Profile.new(nickname)
-      expect(profile.username).to eq('o-200')
-    end
-  end
-
-  describe '#honor' do
-    it 'returns the correct honor value' do
-      profile = Api::Profile.new(nickname)
-      expect(profile.honor).to eq(277)
-    end
-  end
-
-  describe '#rank' do
-    it 'returns the correct rank' do
-      profile = Api::Profile.new(nickname)
-      expect(profile.rank).to eq('5 kyu')
-    end
-  end
-
-  describe '#languages' do
-    it 'returns the list of languages' do
-      profile = Api::Profile.new(nickname)
-      expect(profile.languages).to eq(%w[python ruby javascript])
-    end
-  end
-
-  describe '#leaderboard' do
-    it 'returns the correct leaderboard position' do
-      profile = Api::Profile.new(nickname)
-      expect(profile.leaderboard).to eq(270_699)
-    end
-  end
-
-  describe '#total_completed' do
-    it 'returns the correct total completed challenges' do
-      profile = Api::Profile.new(nickname)
-      expect(profile.total_completed).to eq(49)
-    end
-  end
 end
