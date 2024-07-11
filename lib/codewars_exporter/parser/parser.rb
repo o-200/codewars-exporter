@@ -28,11 +28,7 @@ class Parser
     choice_how_save
 
     save_solutions
-
-    puts 'Work completed! Closing browser...'
-
-    sleep 5
-    system('clear')
+    finish_process
   end
 
   private
@@ -75,5 +71,11 @@ class Parser
   # start scenario of saving to files
   def save_solutions
     Utils::FileSaver.new(@nickname, @email, @password, @language, @choice)
+  end
+
+  def finish_process
+    puts 'Work completed! Closing browser...'
+    sleep 5
+    system('clear')
   end
 end
