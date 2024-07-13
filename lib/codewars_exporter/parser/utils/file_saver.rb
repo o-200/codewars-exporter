@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'watir'
+require './lib/codewars_exporter/utils'
 require 'nokogiri'
 
 module Utils
@@ -25,7 +25,7 @@ module Utils
       @password = password
       @language = language
       @choice_class = choice_class
-      @browser = Watir::Browser.new :firefox, headless: true
+      @browser = Browser.new
 
       start_save_solutions
     end

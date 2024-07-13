@@ -19,15 +19,6 @@ module Api
       [username, languages, rank, honor, leaderboardPosition, total_completed]
     end
 
-    private
-
-    # creates a lot of methods which not explicit
-    def method_missing(method_name)
-      return unless @json.show.key?(method_name.to_s)
-
-      @json.send(method_name)
-    end
-
     # prepared for #full_data
     # TODO: must be refactored using search
     def rank
@@ -44,6 +35,15 @@ module Api
     # TODO: must be refactored using search
     def total_completed
       @json.codeChallenges.totalCompleted
+    end
+
+    private
+
+    # creates a lot of methods which not explicit
+    def method_missing(method_name)
+      return unless @json.show.key?(method_name.to_s)
+
+      @json.send(method_name)
     end
 
     # parsing process
