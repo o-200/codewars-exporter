@@ -17,34 +17,28 @@ https://dev.codewars.com/
 
 # Requirements
 
-1. Pretty good if you have installed ruby <3
-2. Email and password from codewars (any other methods to login like Oauth doesnt worked)
+1. Docker
 
 # Usage
 
-#### 0. You have to install web-driver for your browser (we are using chrome by default)
+#### 0. Install Docker if you don't have them
 
-```
-http://watir.com/guides/drivers/
-```
+#### 1. Install Project From Github
 
-#### 1. Setup application:
+#### 2. Build Image
+`docker build -t codewars-exporter .`
 
-```ruby
-bundle install
-```
+#### 3. Start Image bash
+`docker run -it codewars-exporter /bin/sh`
 
-#### 2. For using codewars-api (general information) functionality you should use:
+#### 4. Use Our functionality
+If you're rubyist you can check bin/* for any configs, but anyway use
 
-```ruby
-bin/api <email> <password>
-```
+`bin/api <email> <password>`
+`bin/console` - debugging
+`bin/parser <email> <password> <choice methods> <language>`
 
-#### 3. If you want to parse your solutions just use:
-
-```ruby
-bin/parser <email> <password> <choice_method> <language>
-```
+P.S: choice methods and language parameters must be blank. (not anymore because docker)
 
 ### Choice methods
 

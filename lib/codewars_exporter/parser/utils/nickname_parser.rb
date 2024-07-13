@@ -39,7 +39,6 @@ module Utils
       @browser.goto(EDIT_MENU)
 
       doc = Nokogiri::HTML.parse(@browser.html)
-
       doc = doc.css('.user_username')
       @username = doc.at_css('input#user_username')['value']
 
