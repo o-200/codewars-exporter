@@ -3,6 +3,8 @@
 
 require './lib/codewars_exporter'
 
+raise ArgumentError, 'required for 2 arguments, check README.md' if ARGV.count != 2
+
 parser = Utils::NicknameParser.new(ARGV[0], ARGV[1])
 parser.run
 table = Api::Table.new(parser.username)

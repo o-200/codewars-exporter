@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/codewars_exporter/utils'
+require './lib/codewars_exporter/utils/browser'
 require 'nokogiri'
 
 module Utils
