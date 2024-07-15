@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require 'watir'
+require './lib/codewars_exporter/utils/browser'
 require 'nokogiri'
-require 'pry-byebug'
 
 module Utils
   class NicknameParser
@@ -12,11 +11,9 @@ module Utils
     attr_reader :email, :password, :username
 
     def initialize(email, password)
-      @browser = Watir::Browser.new :firefox, headless: true
+      @browser = Browser.new
       @email = email
       @password = password
-
-      run
     end
 
     def run
@@ -24,12 +21,13 @@ module Utils
       parse
 
       @browser.close
+      self
     end
 
     private
 
     def login
-      puts 'login to codewars and them parse your nickname...'
+      puts 'Logging into Codewars and then parsing your nickname...'
       @browser.goto(LOGIN_URL)
 
       @browser.text_field(id: 'user_email').set(email)
@@ -44,7 +42,7 @@ module Utils
       doc = doc.css('.user_username')
       @username = doc.at_css('input#user_username')['value']
 
-      puts "We're get your nickname, #{@username}"
+      puts "We've got your nickname: #{@username}"
     end
   end
 end

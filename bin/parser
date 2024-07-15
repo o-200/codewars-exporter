@@ -3,5 +3,7 @@
 
 require './lib/codewars_exporter'
 
+raise ArgumentError, 'required for 4 arguments, check README.md' if ARGV.count != 4
+
 parser = Parser.new(ARGV[0], ARGV[1], ARGV[2], ARGV[3])
 parser.run

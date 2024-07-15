@@ -1,13 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: false
 
-require './lib/codewars_exporter/parser/nickname_parser'
-require './lib/codewars_exporter/api/profile'
-require './lib/codewars_exporter/api/table'
+require './lib/codewars_exporter'
 
-parser = NicknameParser.new(ARGV[0], ARGV[1])
+raise ArgumentError, 'required for 2 arguments, check README.md' if ARGV.count != 2
+
+parser = Utils::NicknameParser.new(ARGV[0], ARGV[1])
 parser.run
-
 table = Api::Table.new(parser.username)
 table.create_table
 

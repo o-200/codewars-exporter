@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'fileutils'
-
 require './lib/codewars_exporter/api'
 require_relative 'utils'
 
@@ -45,16 +43,15 @@ class Parser
   # +Utils::NicknameParser+ - class
   # parser username of codewars account
   def find_nick
-    @nickname = Utils::NicknameParser.new(@email, @password).username
+    @nickname = Utils::NicknameParser.new(@email, @password).run.username
   end
 
   # +Api::Profile+
   # finds languages and give list to choice of them
   def choice_language
     profile = Api::Profile.new(@nickname)
-
     puts 'choose the language which need to parse?'
-    puts "I am detected these languages: [#{profile.languages.join(', ')}]"
+    puts "I am detected these languages: [#{profile.languages.gsub("\n", ', ')}]"
 
     @language = $stdin.gets.chomp.to_s.downcase if @language.nil?
     system('clear')
