@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # TODO: refactor like that, implement search https://www.rubyguides.com/2017/11/prefix-trees-in-ruby/
 #
 #
