@@ -35,10 +35,7 @@ https://dev.codewars.com/
 If you're rubyist you can check bin/* for any configs, but anyway use
 
 - use info from codewars api - `bin/api <email> <password>`
-- debugging - `bin/console`
 - parse solutions - `bin/parser <email> <password> <choice methods> <language>`
-
-P.S: choice methods and language parameters must be blank. (not anymore because docker)
 
 ### Choice methods
 
