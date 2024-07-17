@@ -32,17 +32,15 @@ https://dev.codewars.com/
 `docker run -it codewars-exporter /bin/sh`
 
 #### 4. Use Our functionality
-If you're rubyist you can check bin/* for any configs, but anyway use
+If you're rubyist check bin/* for any configs, if isnt:
 
-- use info from codewars api - `bin/api <email> <password>`
+- print info from codewars api - `bin/api <email> <password>`
 - parse solutions - `bin/parser <email> <password> <choice methods> <language>`
 
-### Choice methods
+### Choice methods - must be integer
 
-1. Save every solution to every file
-2. Save all solutions to one file
-
-Anyway all params can be blank and you will need put them later
+1 - Save every solution to every file
+2 - Save all solutions to one text file
 
 # Contribution
 
@@ -50,3 +48,5 @@ Anyway all params can be blank and you will need put them later
 2. Wait my answer
 3. Fork the repository, create branch with issue name
 4. When task is complete - create pull request and tell me about status of task
+
+If you needed for feature - create issue and let's discuss!
