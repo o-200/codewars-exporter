@@ -17,21 +17,34 @@ https://dev.codewars.com/
 
 # Requirements
 
+## Using docker
 1. Docker
+
+## Local install
+1. geckodriver (https://github.com/mozilla/geckodriver)
+2. firefox-esr (https://www.mozilla.org/en-US/firefox/enterprise/)
 
 # Usage
 
-#### 0. Install Docker if you don't have them
+## Using Docker:
 
-#### 1. Install Project From Github
-
+#### 1. Install Project 
 #### 2. Build Image
 `docker build -t codewars-exporter .`
-
 #### 3. Start Image bash
 `docker run -it codewars-exporter /bin/sh`
-
 #### 4. Use Our functionality
+
+## Locall installation:
+
+#### 1. Install Project 
+#### 2. Install require dependencies above
+##### 2.1 For geckodriver you should unpack acrhive and rename unpacked file to ```geckodriver```
+#### 3. ```bundle install```
+#### 4. Use Our functionality
+
+
+# Functionality:
 If you're rubyist check bin/* for any configs, if isnt:
 
 - print info from codewars api - `bin/api <email> <password>`
@@ -39,8 +52,13 @@ If you're rubyist check bin/* for any configs, if isnt:
 
 ### Choice methods - must be integer
 
-1 - Save every solution to every file
-2 - Save all solutions to one text file
+1. Save every solution to every file
+2. Save all solutions to one text file
+
+#### Example of requests:
+
+1. bin/api myemail@email.com mypassword
+2. bin/parser myemail@email.com mypassword 1 ruby
 
 # Contribution
 

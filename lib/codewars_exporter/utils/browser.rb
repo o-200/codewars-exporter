@@ -6,7 +6,7 @@ class Browser
   attr_accessor :browser
 
   def initialize
-    Selenium::WebDriver::Firefox::Service.driver_path = '/usr/local/bin/geckodriver'
+    Selenium::WebDriver::Firefox::Service.driver_path = '/codewars-exporter/geckodriver'
     options = Selenium::WebDriver::Firefox::Options.new
     options.binary = '/usr/bin/firefox-esr'
     @browser = Watir::Browser.new(:firefox, options:, headless: true)
