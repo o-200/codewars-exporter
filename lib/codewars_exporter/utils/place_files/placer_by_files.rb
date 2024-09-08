@@ -24,6 +24,6 @@ class PlacerByFiles
   private
 
   def solution_path
-    "solutions/#{@language}"
+    "result/solutions/#{@language}"
   end
 end
