@@ -32,7 +32,7 @@ https://dev.codewars.com/
 #### 2. Build Image
 `docker build -t codewars-exporter .`
 #### 3. Start Image bash
-`docker run -it codewars-exporter /bin/sh`
+`docker run -it -v $(pwd)/result:/codewars-exporter/result codewars-exporter /bin/sh`
 #### 4. Use Our functionality
 
 ## Locall installation:
